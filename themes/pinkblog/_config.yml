@@ -10,10 +10,10 @@ menu:
   关于: /about
 
 effects:
-  sakura: false
+  sakura: true
 
 live2d:
-  enable: false
+  enable: true
 
 comment:
   giscus:

@@ -26,6 +26,22 @@
     <%- body %>
   </main>
   <%- partial('_partial/footer') %>
+  <script>
+  (function () {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    var root = document.documentElement;
+    function label() { btn.textContent = root.dataset.theme === 'dark' ? '☀️' : '🌙'; }
+    btn.addEventListener('click', function () {
+      var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try { localStorage.setItem('pb-theme', next); } catch (e) {}
+      label();
+    });
+    label();
+  })();
+  </script>
+  <%- js('js/toc') %>
   <% if (theme.live2d.enable) { %><%- js('js/live2d') %><% } %>
   <% if (theme.effects.sakura) { %><%- js('js/sakura') %><% } %>
 </body>
