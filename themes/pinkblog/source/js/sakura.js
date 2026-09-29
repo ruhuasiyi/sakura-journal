@@ -24,7 +24,7 @@
 
   function tick() {
     ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = isDark() ? '#E08198' : '#F4A7B9';
+    ctx.fillStyle = isDark() ? '#FF9CC3' : '#F4A7B9';
     ctx.globalAlpha = isDark() ? .3 : .5;
     for (var i = 0; i < petals.length; i++) {
       var p = petals[i];
