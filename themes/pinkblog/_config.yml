@@ -1,0 +1,43 @@
+profile:
+  avatar: /images/avatar.svg
+  bio: 在这里慢慢写，慢慢画 ～
+
+menu:
+  首页: /
+  归档: /archives
+  友链: /links
+  项目: /projects
+  关于: /about
+
+effects:
+  sakura: false
+
+live2d:
+  enable: false
+
+comment:
+  giscus:
+    repo: ''
+    repo_id: ''
+    category: ''
+    category_id: ''
+
+links:
+  - name: Hexo
+    url: https://hexo.io
+    desc: 快速简洁的博客框架
+    avatar: ''
+  - name: Cloudflare Pages
+    url: https://pages.cloudflare.com
+    desc: 免费的静态站点托管
+    avatar: ''
+
+projects:
+  - name: pinkblog
+    desc: 这套从零生成的淡粉手帐主题
+    url: https://hexo.io
+    cover: /images/project-placeholder.svg
+  - name: 敬请期待
+    desc: 下一个小东西还在路上
+    url: '#'
+    cover: /images/project-placeholder.svg

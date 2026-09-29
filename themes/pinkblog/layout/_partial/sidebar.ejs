@@ -1,0 +1,20 @@
+<aside class="sidebar">
+  <div class="card profile-card">
+    <span class="tape" aria-hidden="true"></span>
+    <img class="avatar" src="<%- url_for(theme.profile.avatar) %>" alt="avatar">
+    <h3><%= config.author %></h3>
+    <p class="bio"><%= theme.profile.bio %></p>
+  </div>
+  <div class="card side-card">
+    <h3>✿ 标签</h3>
+    <div class="tagcloud-wrap"><%- tagcloud({ min_font: 12, max_font: 16, amount: 20, color: false }) %></div>
+  </div>
+  <div class="card side-card">
+    <h3>✿ 最近</h3>
+    <ul class="recent-list">
+      <% site.posts.sort('date', -1).limit(5).each(function (p) { %>
+      <li><a href="<%- url_for(p.path) %>"><%= p.title %></a></li>
+      <% }) %>
+    </ul>
+  </div>
+</aside>

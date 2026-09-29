@@ -1,0 +1,27 @@
+:root {
+  --color-bg: #FDF6F4;
+  --color-card: #FFFCFB;
+  --color-primary: #C4536B;
+  --color-accent: #B96A85;
+  --color-text: #6B5450;
+  --color-text-soft: #B39A94;
+  --color-border: #F0DEDA;
+  --color-tape: rgba(244, 167, 185, .55);
+  --shadow-card: 2px 3px 0 rgba(180, 120, 130, .10);
+  --shadow-card-hover: 3px 6px 0 rgba(180, 120, 130, .16);
+  --radius: 6px;
+  --font-body: 'LXGW WenKai Screen', 'LXGW WenKai', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+
+[data-theme='dark'] {
+  --color-bg: #2A2226;
+  --color-card: #332A2E;
+  --color-primary: #E08198;
+  --color-accent: #C990A4;
+  --color-text: #EADDD8;
+  --color-text-soft: #A08B90;
+  --color-border: #453A40;
+  --color-tape: rgba(224, 129, 152, .35);
+  --shadow-card: 2px 3px 0 rgba(0, 0, 0, .35);
+  --shadow-card-hover: 3px 6px 0 rgba(0, 0, 0, .45);
+}

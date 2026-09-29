@@ -1,0 +1,16 @@
+<% if (page.current === 1) { %>
+<section class="card hero">
+  <span class="tape" aria-hidden="true"></span>
+  <h1 class="hero-title">welcome to my journal</h1>
+  <p class="hero-sub"><%= theme.profile.bio %></p>
+</section>
+<% } %>
+<div class="home-layout">
+  <div class="post-list">
+    <% page.posts.each(function (post) { %>
+    <%- partial('_partial/post-card', { post: post }) %>
+    <% }) %>
+    <%- paginator({ prev_text: '←', next_text: '→', mid_size: 1 }) %>
+  </div>
+  <%- partial('_partial/sidebar') %>
+</div>

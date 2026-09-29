@@ -1,0 +1,11 @@
+<article class="card post-card">
+  <span class="tape" aria-hidden="true"></span>
+  <h2 class="post-card-title"><a href="<%- url_for(post.path) %>"><%= post.title %></a></h2>
+  <p class="post-card-excerpt"><%= truncate(strip_html(post.excerpt || post.content), { length: 76 }) %></p>
+  <div class="post-card-meta">
+    <span class="stamp"><%= date(post.date, 'YYYY-MM-DD') %></span>
+    <% if (post.tags && post.tags.length) { post.tags.each(function (t) { %>
+    <a class="stamp stamp-tag" href="<%- url_for(t.path) %>">✿ <%= t.name %></a>
+    <% }); } %>
+  </div>
+</article>

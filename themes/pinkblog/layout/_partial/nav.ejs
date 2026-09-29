@@ -1,0 +1,11 @@
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="brand" href="<%- url_for('/') %>">🌸 <%= config.title %> <span class="brand-sub">・日々の記録</span></a>
+    <div class="nav-links">
+      <% for (var name in theme.menu) { %>
+      <a href="<%- url_for(theme.menu[name]) %>"><%= name %></a>
+      <% } %>
+      <button id="theme-toggle" class="theme-toggle" aria-label="切换亮暗主题">🌙</button>
+    </div>
+  </div>
+</nav>

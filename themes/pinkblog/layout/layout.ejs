@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, viewport-fit=cover">
+  <title><%= page.title ? page.title + ' · ' + config.title : config.title %></title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont/style.css">
+  <script>
+  (function () {
+    try {
+      var t = localStorage.getItem('pb-theme');
+      if (t !== 'dark' && t !== 'light') {
+        t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  })();
+  </script>
+  <%- css('css/tokens') %>
+  <%- css('css/base') %>
+  <%- css('css/components') %>
+</head>
+<body>
+  <%- partial('_partial/nav') %>
+  <main class="container">
+    <%- body %>
+  </main>
+  <%- partial('_partial/footer') %>
+  <% if (theme.live2d.enable) { %><%- js('js/live2d') %><% } %>
+  <% if (theme.effects.sakura) { %><%- js('js/sakura') %><% } %>
+</body>
+</html>
