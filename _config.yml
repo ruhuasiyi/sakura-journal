@@ -1,0 +1,23 @@
+title: pinkblog
+subtitle: 日々の記録
+description: RHSY 的手帐博客
+author: RHSY
+language: zh-CN
+timezone: 'Asia/Shanghai'
+url: http://localhost:4000
+root: /
+permalink: :year/:month/:day/:title/
+theme: pinkblog
+
+index_generator:
+  path: ''
+  per_page: 6
+
+marked:
+  gfm: true
+  prependRoot: true
+  postAsset: true
+
+server:
+  port: 4000
+  compress: true
