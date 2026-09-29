@@ -133,3 +133,6 @@
 
 /* ---- 樱花画布 ---- */
 #sakura-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 40; }
+
+/* ---- 鼠标拖尾画布 ---- */
+#trail-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 40; }
