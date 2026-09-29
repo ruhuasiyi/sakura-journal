@@ -1,8 +1,8 @@
 (function () {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  // 上游 autoload.js 硬编码 fastly.jsdelivr.net，该节点在部分网络环境不可达，
-  // 因此这里自行完成加载流程，全部资源走 cdn.jsdelivr.net。
-  var live2d_path = 'https://cdn.jsdelivr.net/npm/live2d-widgets@1.0.1/dist/';
+  // 看板娘资源全部本地自托管（themes/pinkblog/source/live2d/），
+  // 不依赖任何 CDN——jsDelivr 的 fastly 节点在部分网络环境不可达。
+  var live2d_path = '/live2d/';
 
   function loadExternalResource(url, type) {
     return new Promise(function (resolve, reject) {
@@ -38,7 +38,6 @@
     window.initWidget({
       waifuPath: live2d_path + 'waifu-tips.json',
       cubism2Path: live2d_path + 'live2d.min.js',
-      cubism5Path: 'https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js',
       tools: ['hitokoto', 'asteroids', 'switch-model', 'switch-texture', 'photo', 'info', 'quit'],
       logLevel: 'warn',
       drag: false
