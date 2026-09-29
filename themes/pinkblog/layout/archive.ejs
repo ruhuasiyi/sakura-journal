@@ -1,0 +1,24 @@
+<h1 class="page-title">archives<span class="page-title-sub">全部分 <i><%= site.posts.length %></i> 篇</span></h1>
+<%
+var byYear = {};
+page.posts.each(function (p) {
+  var y = p.date.year();
+  if (!byYear[y]) byYear[y] = [];
+  byYear[y].push(p);
+});
+var years = Object.keys(byYear).sort().reverse();
+%>
+<% years.forEach(function (y) { %>
+<section class="archive-year">
+  <h2 class="year-label"><%= y %> 年</h2>
+  <ul class="archive-list">
+    <% byYear[y].sort(function (a, b) { return b.date.unix() - a.date.unix(); }).forEach(function (p) { %>
+    <li>
+      <span class="archive-date"><%= date(p.date, 'MM-DD') %></span>
+      <a href="<%- url_for(p.path) %>"><%= p.title %></a>
+    </li>
+    <% }) %>
+  </ul>
+</section>
+<% }) %>
+<%- paginator({ prev_text: '←', next_text: '→', mid_size: 1 }) %>

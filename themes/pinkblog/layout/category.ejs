@@ -1,0 +1,6 @@
+<h1 class="page-title">✿ <%= page.category %><span class="page-title-sub"><%= page.posts.length %> 篇</span></h1>
+<div class="post-list">
+  <% page.posts.each(function (post) { %>
+  <%- partial('_partial/post-card', { post: post }) %>
+  <% }) %>
+</div>

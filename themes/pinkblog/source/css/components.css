@@ -102,3 +102,12 @@
   .post-layout { flex-direction: column; }
   .toc-wrap { display: none; }
 }
+
+/* ---- 归档页 ---- */
+.archive-list { list-style: none; padding: 0; margin: 0 0 18px; max-width: 760px; }
+.archive-list li { display: flex; gap: 14px; padding: 7px 4px; border-bottom: 1px dashed var(--color-border); }
+.archive-date { color: var(--color-text-soft); font-size: 13px; font-variant-numeric: tabular-nums; }
+.archive-list a { color: var(--color-text); }
+.archive-list a:hover { color: var(--color-primary); }
+.year-label { font-size: 17px; color: var(--color-accent); }
+.year-label::before { content: '✿ '; font-size: .8em; }
