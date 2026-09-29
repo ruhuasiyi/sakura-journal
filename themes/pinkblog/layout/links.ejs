@@ -1,0 +1,16 @@
+<h1 class="page-title"><%= page.title || 'links' %></h1>
+<% if (page.content) { %>
+<div class="page-intro"><%- page.content %></div>
+<% } %>
+<div class="link-grid">
+  <% theme.links.forEach(function (l) { %>
+  <a class="card link-card" href="<%= l.url %>" target="_blank" rel="noopener">
+    <span class="tape" aria-hidden="true"></span>
+    <% if (l.avatar) { %><img src="<%- l.avatar %>" alt=""><% } %>
+    <div>
+      <h3><%= l.name %></h3>
+      <p><%= l.desc %></p>
+    </div>
+  </a>
+  <% }) %>
+</div>

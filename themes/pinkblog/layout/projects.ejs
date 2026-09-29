@@ -1,0 +1,15 @@
+<h1 class="page-title"><%= page.title || 'projects' %></h1>
+<% if (page.content) { %>
+<div class="page-intro"><%- page.content %></div>
+<% } %>
+<div class="project-grid">
+  <% theme.projects.forEach(function (p) { %>
+  <a class="card project-card" href="<%= p.url %>" target="_blank" rel="noopener">
+    <img class="cover" src="<%- url_for(p.cover) %>" alt="<%= p.name %>">
+    <div class="project-body">
+      <h3><%= p.name %></h3>
+      <p><%= p.desc %></p>
+    </div>
+  </a>
+  <% }) %>
+</div>

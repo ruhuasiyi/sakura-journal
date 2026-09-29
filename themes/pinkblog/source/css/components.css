@@ -111,3 +111,22 @@
 .archive-list a:hover { color: var(--color-primary); }
 .year-label { font-size: 17px; color: var(--color-accent); }
 .year-label::before { content: '✿ '; font-size: .8em; }
+
+/* ---- 单页与网格 ---- */
+.page-card { max-width: 760px; }
+.page-intro { max-width: 760px; color: var(--color-text-soft); font-size: 14px; margin-bottom: 6px; }
+
+.link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; margin-top: 16px; }
+.link-card { display: flex; gap: 14px; align-items: center; color: var(--color-text); transform: rotate(-.3deg); transition: transform .18s, box-shadow .18s; }
+.link-card:hover { text-decoration: none; transform: translateY(-3px); box-shadow: var(--shadow-card-hover); }
+.link-card img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.link-card h3 { margin: 0 0 4px; font-size: 15px; }
+.link-card p { margin: 0; font-size: 12.5px; color: var(--color-text-soft); }
+
+.project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; margin-top: 16px; }
+.project-card { padding: 0; overflow: hidden; transform: rotate(.3deg); transition: transform .18s, box-shadow .18s; display: block; }
+.project-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-card-hover); text-decoration: none; }
+.project-card img.cover { width: 100%; height: 150px; object-fit: cover; display: block; }
+.project-card .project-body { padding: 14px 16px; }
+.project-card h3 { margin: 0 0 4px; font-size: 15px; color: var(--color-text); }
+.project-card p { margin: 0; font-size: 12.5px; color: var(--color-text-soft); }
