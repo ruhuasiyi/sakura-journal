@@ -19,7 +19,7 @@ live2d:
 
 comment:
   waline:
-    serverURL: 'https://comment.rhsy.moe:8443'
+    serverURL: 'https://comment.rhsy.moe'
     lang: 'zh-CN'
     emoji:
       - /waline/emoji/tieba
