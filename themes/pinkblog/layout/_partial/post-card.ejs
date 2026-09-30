@@ -8,9 +8,8 @@
   <% } %>
   <div class="post-card-body">
   <h2 class="post-card-title"><a href="<%- url_for(post.path) %>"><%= post.title %></a></h2>
-  <% if (post.cover) {
-     var paras = post.content.match(/<p>[\s\S]*?<\/p>/g) || []; %>
-<div class="post-card-peek"><% paras.forEach(function (para) { %><%- para %><% }) %></div>
+  <% if (post.cover) { %>
+<div class="post-card-peek post-content"><%- post.content.replace(/\s+id="[^"]*"/g, '') %></div>
 <% } else { %>
 <p class="post-card-excerpt"><%= truncate(strip_html(post.excerpt || post.content), { length: 200 }) %></p>
 <% } %>
