@@ -28,6 +28,25 @@ function pbInitPage() {
         dark: 'html[data-theme="dark"]',
         pageview: false
       });
+      // 编辑框占位符携带必填/隐私说明（昵称/邮箱输入框默认折叠，用户看不到）
+      function patchWaline() {
+        var editor = walineEl.querySelector('.wl-editor');
+        if (editor && editor.dataset.pbPatched !== '1' &&
+            editor.placeholder.indexOf('欢迎评论') > -1) {
+          editor.placeholder =
+            '欢迎评论 ～ 昵称与邮箱为必填（邮箱仅用于头像，不会公开），网址选填';
+          editor.dataset.pbPatched = '1';
+        }
+        walineEl.querySelectorAll('input.wl-input').forEach(function (inp) {
+          var ph = inp.placeholder || '';
+          if (ph.indexOf('昵称') > -1) inp.placeholder = '昵称（必填）';
+          else if (ph.indexOf('邮箱') > -1) inp.placeholder = '邮箱（必填 · 仅用于头像，不会公开）';
+          else if (ph.indexOf('网址') > -1 || ph.indexOf('网站') > -1) inp.placeholder = '网址（选填）';
+        });
+      }
+      patchWaline();
+      setTimeout(patchWaline, 500);   // Vue 渲染可能异步，补一次
+      walineEl.addEventListener('focusin', patchWaline);   // 输入框展开时再补一次
     }).catch(function (err) { console.warn('[pinkblog] Waline 加载失败', err); });
   }
 

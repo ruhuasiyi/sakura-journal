@@ -51,6 +51,9 @@ h1, h2, h3, h4 { line-height: 1.35; }
   border-top: 1px dashed var(--color-border);
   text-align: center; padding: 18px; font-size: 13px; color: var(--color-text-soft);
 }
+.rss-link { display: inline-flex; align-items: center; vertical-align: -3px; color: var(--color-text-soft); margin-left: 4px; }
+.rss-link:hover { color: var(--color-primary); }
+.rss-link .icon-rss { width: 14px; height: 14px; }
 
 /* ---- 跨文档 View Transitions：点击卡片 → 文章从卡片位置展开 ---- */
 @view-transition { navigation: auto; }
