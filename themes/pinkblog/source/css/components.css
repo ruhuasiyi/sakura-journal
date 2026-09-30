@@ -254,11 +254,18 @@
 .comments-rss:hover { color: var(--color-primary); border-color: var(--color-tape); }
 .comments-rss svg { width: 14px; height: 14px; }
 
-/* ---- Waline 评论左下角 RSS 图标 → Lucide 线条风格（CSS mask 换皮，跟随主题色）---- */
-.wl-card .wl-rss svg { display: none; }
-.wl-card .wl-rss::before {
-  content: ''; display: inline-block; width: 14px; height: 14px;
-  background-color: currentColor; opacity: .85;
+/* ---- Waline 底部 RSS（本文/本站）→ Lucide 线条风格（CSS mask 换皮，跟随主题色）---- */
+.wl-rss { display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.wl-rss svg { display: none; }   /* 隐藏自带的橙色方块图标 */
+.wl-rss a {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 12px; color: var(--color-text-soft);
+}
+.wl-rss a:hover { color: var(--color-primary); }
+.wl-rss a span { font-size: 12px; }
+.wl-rss a::before {
+  content: ''; display: inline-block; width: 13px; height: 13px; flex-shrink: 0;
+  background-color: currentColor;
   -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 11a9 9 0 0 1 9 9'/%3E%3Cpath d='M4 4a16 16 0 0 1 16 16'/%3E%3Ccircle cx='5' cy='19' r='2' fill='%23000' stroke='none'/%3E%3C/svg%3E") no-repeat center / contain;
   mask: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 11a9 9 0 0 1 9 9'/%3E%3Cpath d='M4 4a16 16 0 0 1 16 16'/%3E%3Ccircle cx='5' cy='19' r='2' fill='%23000' stroke='none'/%3E%3C/svg%3E") no-repeat center / contain;
 }
