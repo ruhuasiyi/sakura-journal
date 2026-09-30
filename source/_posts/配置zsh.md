@@ -1,5 +1,6 @@
 ---
 title: 配置zsh
+cover: /images/cover/Image_1790653312280_950.png
 date: 2026-01-05
 tags: [ArchLinux]
 categories: [Linux]

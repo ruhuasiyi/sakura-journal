@@ -1,5 +1,6 @@
 ---
 title: Btrfs下配置swapfile并启用休眠
+cover: /images/cover/Image_1790671831394_706.png
 date: 2026-01-05
 tags: [ArchLinux, btrfs]
 categories: [Linux]

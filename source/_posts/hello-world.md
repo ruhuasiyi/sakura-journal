@@ -2,6 +2,7 @@
 title: hello world ～
 date: 2026-09-29 10:00:00
 tags: [日常]
+cover: /images/covers/sample.svg
 categories: [手帐]
 ---
 

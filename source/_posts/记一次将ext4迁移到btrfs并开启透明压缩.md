@@ -1,5 +1,6 @@
 ---
 title: 记一次将ext4迁移到btrfs并开启透明压缩
+cover: /images/cover/Image_1790662006636_837.jpg
 date: 2026-01-04
 tags: [ArchLinux, btrfs]
 categories: [Linux]
