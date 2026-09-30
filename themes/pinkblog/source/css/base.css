@@ -20,10 +20,11 @@ h1, h2, h3, h4 { line-height: 1.35; }
 
 .site-nav {
   position: sticky; top: 0; z-index: 50;
-  background: rgba(253, 246, 244, .94);   /* 实时毛玻璃是滚动卡顿元凶，改半透明实色 */
+  background: rgba(253, 246, 244, .85);
+  backdrop-filter: blur(8px);
   border-bottom: 1px dashed var(--color-border);
 }
-[data-theme='dark'] .site-nav { background: rgba(32, 26, 43, .94); }
+[data-theme='dark'] .site-nav { background: rgba(32, 26, 43, .85); }
 .nav-inner {
   max-width: 1080px; margin: 0 auto; padding: 12px 20px;
   display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;

@@ -193,18 +193,6 @@
   overflow: hidden; position: relative;
   background: var(--color-bg);
 }
-.card-blur {
-  position: absolute; inset: 0; z-index: 0;
-  background-size: cover; background-position: center;
-  opacity: .24; pointer-events: none;   /* 模糊已预烘焙进 -blur.avif，运行时零计算 */
-}
-.post-card.has-cover::after {
-  content: ''; position: absolute; inset: 0; z-index: 0;
-  background: var(--color-card); opacity: .45; pointer-events: none;
-}
-/* 暗色：预烘焙的亮色模糊图需要压暗（brightness 是廉价滤镜，无滚动开销） */
-[data-theme='dark'] .card-blur { filter: brightness(.4); opacity: .15; }
-[data-theme='dark'] .post-card.has-cover::after { opacity: .3; }
 .post-card-cover, .post-card-body, .post-card .tape { z-index: 1; }
 .post-card-cover, .post-card-body { position: relative; }
 .post-card-cover .cover-img {
@@ -226,12 +214,6 @@
 [data-theme='dark'] .post-card.has-cover .post-card-body {
   box-shadow: 2px 3px 0 rgba(0, 0, 0, .35);
 }
-/* 暗色下光晕整体调暗：不是降低透明度，而是把模糊图本身压黑——光斑变成暗色残影 */
-[data-theme='dark'] .card-blur {
-  opacity: .3;
-  filter: blur(34px) saturate(1.05) brightness(.4);
-}
-[data-theme='dark'] .post-card.has-cover::after { opacity: .3; }
 .post-card.has-cover .post-card-meta { margin-top: auto; }
 @media (max-width: 768px) {
   .post-card.has-cover,

@@ -1,7 +1,6 @@
 <article class="card post-card<%= post.cover ? ' has-cover' : '' %>">
   <span class="tape" aria-hidden="true"></span>
   <% if (post.cover) { %>
-  <div class="card-blur" style="background-image:url('<%- url_for(post.cover.replace(/\.(avif|png|jpg|jpeg|webp)$/, '-blur.avif')) %>')" aria-hidden="true"></div>
   <a class="post-card-cover" href="<%- url_for(post.path) %>" tabindex="-1" aria-hidden="true">
     <img class="cover-img" src="<%- url_for(post.cover) %>" alt="<%= post.title %>" loading="lazy">
   </a>
