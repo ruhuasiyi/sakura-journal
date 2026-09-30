@@ -1,14 +1,22 @@
 title: 夜樱手帐
 subtitle: Sakura Journal
-description: RHSY 的手帐博客 · 夜樱与樱花的手帐
-author: RHSY
+description: 阿海的博客，拼凑折腾与日常的碎片
+author: 阿海
 language: zh-CN
 timezone: 'Asia/Shanghai'
-url: http://localhost:4000
+url: https://rhsy.moe
 root: /
 permalink: :year/:month/:day/:title/
 theme: pinkblog
 post_asset_folder: true
+
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+
+sitemap:
+  path: sitemap.xml
 
 index_generator:
   path: ''

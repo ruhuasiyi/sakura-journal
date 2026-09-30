@@ -18,6 +18,22 @@
   </script>
   <link rel="icon" type="image/png" href="/images/favicon.png">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+  <link rel="alternate" type="application/atom+xml" title="<%= config.title %>" href="<%- url_for('/atom.xml') %>">
+  <%
+  var metaDesc = page.description ||
+    (page.excerpt ? strip_html(page.excerpt) : '') ||
+    (is_post() ? truncate(strip_html(page.content), { length: 80 }) : '') ||
+    config.description;
+  metaDesc = String(metaDesc).replace(/\s+/g, ' ').replace(/"/g, '&quot;').trim();
+  %>
+  <meta name="description" content="<%= metaDesc %>">
+  <meta property="og:site_name" content="<%= config.title %>">
+  <meta property="og:title" content="<%= page.title || config.title %>">
+  <meta property="og:description" content="<%= metaDesc %>">
+  <meta property="og:type" content="<%= is_post() ? 'article' : 'website' %>">
+  <meta property="og:url" content="<%= config.url %>/<%= page.path %>">
+  <meta property="og:image" content="<%= config.url %>/images/avatar.jpg">
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   <script>window.PB_WALINE = { serverURL: '<%= theme.comment.waline ? theme.comment.waline.serverURL : '' %>', lang: '<%= theme.comment.waline ? theme.comment.waline.lang : "zh-CN" %>', module: '/waline/waline.js' };</script>
   <link rel="stylesheet" href="/waline/waline.css">
   <%- css('css/tokens') %>
