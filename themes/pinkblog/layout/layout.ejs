@@ -63,6 +63,55 @@
     }, { passive: true });
   })();
   </script>
+  <script>
+  // 轻量路由：站内跳转 fetch 换页 + 同页 View Transition（卡片 morph 到文章页）
+  // 配合 toc.js 暴露的 window.pbInitPage() 完成换页后重初始化
+  (function () {
+    function swap(url) {
+      return fetch(url).then(function (res) { return res.text(); }).then(function (html) {
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+        var newMain = doc.querySelector('main.container');
+        var oldMain = document.querySelector('main.container');
+        if (!newMain || !oldMain) { location.href = url; return; }
+        document.title = doc.title;
+        // giscus 的脚本节点不会随 importNode 执行，需重建并注入当前主题
+        newMain.querySelectorAll('script[src*="giscus"]').forEach(function (old) {
+          var fresh = document.createElement('script');
+          fresh.src = old.src;
+          for (var i = 0; i < old.attributes.length; i++) {
+            var a = old.attributes[i];
+            if (a.name === 'data-theme') a.value =
+              document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+            fresh.setAttribute(a.name, a.value);
+          }
+          old.replaceWith(fresh);
+        });
+        oldMain.replaceWith(document.adoptNode(newMain));
+        window.scrollTo(0, 0);
+        window.pbInitPage && window.pbInitPage();
+      });
+    }
+    function navigate(url, push) {
+      if (document.startViewTransition) {
+        document.startViewTransition(function () { return swap(url); });
+      } else {
+        swap(url);
+      }
+      if (push) history.pushState({}, '', url);
+    }
+    document.addEventListener('click', function (e) {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var a = e.target.closest && e.target.closest('a[href]');
+      if (!a || a.host !== location.host || a.target === '_blank' || a.hasAttribute('download')) return;
+      if (a.dataset.noSwup !== undefined && false) return;
+      // 纯锚点（同页 #）走默认行为
+      if (a.pathname === location.pathname && a.hash) return;
+      e.preventDefault();
+      navigate(a.href, true);
+    });
+    window.addEventListener('popstate', function () { navigate(location.href, false); });
+  })();
+  </script>
   <% if (theme.live2d.enable) { %><%- js('js/live2d') %><% } %>
   <% if (theme.effects.trail) { %><%- js('js/trail') %><% } %>
   <% if (theme.effects.sakura) { %><%- js('js/sakura') %><% } %>

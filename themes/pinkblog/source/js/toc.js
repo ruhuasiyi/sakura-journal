@@ -1,4 +1,4 @@
-(function () {
+function pbInitPage() {
   // 代码块语言标签：从 figure.highlight 的类名取语言。
   // figure 自身是横向滚动容器，标签必须挂在外层 wrapper 上才能钉在可视区域右上角。
   document.querySelectorAll('figure.highlight').forEach(function (fig) {
@@ -52,4 +52,6 @@
   if (open) html += '</ul>';
   html += '</ul>';
   toc.innerHTML = html;
-})();
+}
+window.pbInitPage = pbInitPage;
+pbInitPage();
