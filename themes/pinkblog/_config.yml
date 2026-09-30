@@ -21,6 +21,8 @@ comment:
   waline:
     serverURL: 'https://comment.rhsy.moe:8443'
     lang: 'zh-CN'
+    emoji:
+      - /waline/emoji/tieba
 
 links:
   - name: Hexo

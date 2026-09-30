@@ -11,6 +11,9 @@ importers:
       '@waline/client':
         specifier: ^3.16.0
         version: 3.16.0
+      '@waline/emojis':
+        specifier: ^1.4.0
+        version: 1.4.0
       hexo:
         specifier: ^8.1.2
         version: 8.1.2(chokidar@3.6.0)
@@ -319,6 +322,9 @@ packages:
   '@waline/client@3.16.0':
     resolution: {integrity: sha512-pluWjHTYiSGIkK0mzejJaZazlpPxAEGGqpn9xQC8QW5SzrEqZ4lBixeR8jsivuvKAtBV2Hp6EsqZp50P+ebmZw==}
     engines: {node: '>=22'}
+
+  '@waline/emojis@1.4.0':
+    resolution: {integrity: sha512-3k4Ued5TW4wzJj99/K5aDTC+JTelUBXD5o5DcinSln99tMYgWIo+A/Itgsa2H9V2kfN9AEBTzXDh4WZ6z1dKsw==}
 
   '@webc.site/math@0.1.41':
     resolution: {integrity: sha512-Tev02lqJLaEO+MNMq74lWpzuNZT/8bp2rSSzyDJR/u2ovh1jI3bW5HVveGILVKK+7Owf48KaUG9pd35BNf9mrw==}
@@ -1498,6 +1504,8 @@ snapshots:
       vue: 3.5.43
     transitivePeerDependencies:
       - typescript
+
+  '@waline/emojis@1.4.0': {}
 
   '@webc.site/math@0.1.41': {}
 

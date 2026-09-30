@@ -26,7 +26,8 @@ function pbInitPage() {
         serverURL: window.PB_WALINE.serverURL,
         lang: window.PB_WALINE.lang || 'zh-CN',
         dark: 'html[data-theme="dark"]',
-        pageview: false
+        pageview: false,
+        emoji: window.PB_WALINE.emoji
       });
       // 编辑框占位符携带必填/隐私说明（昵称/邮箱输入框默认折叠，用户看不到）
       function patchWaline() {

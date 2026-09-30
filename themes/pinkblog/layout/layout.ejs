@@ -34,7 +34,12 @@
   <meta property="og:url" content="<%= config.url %>/<%= page.path %>">
   <meta property="og:image" content="<%= config.url %>/images/avatar.jpg">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-  <script>window.PB_WALINE = { serverURL: '<%= theme.comment.waline ? theme.comment.waline.serverURL : '' %>', lang: '<%= theme.comment.waline ? theme.comment.waline.lang : "zh-CN" %>', module: '/waline/waline.js' };</script>
+  <script>window.PB_WALINE = {
+      serverURL: '<%= theme.comment.waline ? theme.comment.waline.serverURL : '' %>',
+      lang: '<%= theme.comment.waline ? theme.comment.waline.lang : "zh-CN" %>',
+      module: '/waline/waline.js',
+      emoji: <%- JSON.stringify(theme.comment.waline.emoji || false) %>
+    };</script>
   <link rel="stylesheet" href="/waline/waline.css">
   <%- css('css/tokens') %>
   <%- css('css/base') %>
