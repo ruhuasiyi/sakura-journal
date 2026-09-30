@@ -37,6 +37,10 @@ highlight:
 include:
   - _headers
 
+# 验证文件等需要原样部署、不套主题的资源
+skip_render:
+  - googleccdc80b5acff15be.html
+
 server:
   port: 4000
   compress: true
