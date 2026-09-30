@@ -271,16 +271,6 @@
   mask: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 11a9 9 0 0 1 9 9'/%3E%3Cpath d='M4 4a16 16 0 0 1 16 16'/%3E%3Ccircle cx='5' cy='19' r='2' fill='%23000' stroke='none'/%3E%3C/svg%3E") no-repeat center / contain;
 }
 
-/* 暗色下表情弹层铺浅色纸底——灰度透明表情在浅底上才清晰 */
-[data-theme='dark'] #waline-comment .wl-emoji-popup,
-[data-theme='dark'] .page-waline .wl-emoji-popup {
-  background: #FFFCFB;
-  color: #6B5450;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, .45);
-}
-[data-theme='dark'] #waline-comment .wl-emoji-preview,
-[data-theme='dark'] .page-waline .wl-emoji-preview { background: #FFFCFB; }
-
 /* ---- Waline 评论（手帐风适配）——变量名必须是 waline 实际的连字符拼写 ---- */
 #waline-comment, .page-waline {
   --waline-theme-color: var(--color-primary);
