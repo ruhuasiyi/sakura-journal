@@ -44,11 +44,8 @@ links:
     avatar: ''
 
 projects:
-  - name: pinkblog
-    desc: 这套从零生成的淡粉手帐主题
-    url: https://hexo.io
-    cover: /images/project-placeholder.svg
   - name: 敬请期待
     desc: 下一个小东西还在路上
     url: '#'
+    pending: true
     cover: /images/project-placeholder.svg

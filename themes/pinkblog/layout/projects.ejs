@@ -4,6 +4,16 @@
 <% } %>
 <div class="project-grid">
   <% theme.projects.forEach(function (p) { %>
+  <% if (p.pending || p.url === '#') { %>
+  <div class="card project-card is-pending">
+    <img class="cover" src="<%- url_for(p.cover) %>" alt="<%= p.name %>">
+    <div class="project-body">
+      <h3><%= p.name %></h3>
+      <p><%= p.desc %></p>
+    </div>
+    <span class="pending-stamp">PENDING</span>
+  </div>
+  <% } else { %>
   <a class="card project-card" href="<%= p.url %>" target="_blank" rel="noopener">
     <img class="cover" src="<%- url_for(p.cover) %>" alt="<%= p.name %>">
     <div class="project-body">
@@ -11,5 +21,6 @@
       <p><%= p.desc %></p>
     </div>
   </a>
+  <% } %>
   <% }) %>
 </div>
