@@ -16,6 +16,19 @@ function pbInitPage() {
     wrap.appendChild(label);
   });
 
+  // ---- 统计：SPA 换页后补计数（GoatCounter）+ 萌计数器刷新 ----
+  if (window.goatcounter && window.goatcounter.count) {
+    window.goatcounter.count({
+      path: location.pathname + location.search,
+      title: document.title
+    });
+  }
+  var moeImg = document.querySelector('.moe-counter img');
+  if (moeImg) {
+    var sep = moeImg.src.indexOf('?') > -1 ? '&' : '?';
+    moeImg.src = moeImg.src.split('?')[0] + sep + 't=' + Date.now();
+  }
+
   // ---- Waline 评论组件（文章页/留言板）----
   var walineEl = document.getElementById('waline-comment');
   if (walineEl && window.PB_WALINE && window.PB_WALINE.serverURL) {

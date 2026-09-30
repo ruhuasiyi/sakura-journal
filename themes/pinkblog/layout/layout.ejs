@@ -162,6 +162,10 @@
     window.addEventListener('popstate', function () { navigate(location.href, false); });
   })();
   </script>
+  <% if (theme.analytics && theme.analytics.goatcounter) { %>
+  <script data-goatcounter="<%= theme.analytics.goatcounter %>" async
+    src="<%= theme.analytics.goatcounter.replace(/\/count$/, '') + '/count.js' %>"></script>
+  <% } %>
   <% if (theme.live2d.enable) { %><%- js('js/live2d') %><% } %>
   <% if (theme.effects.trail) { %><%- js('js/trail') %><% } %>
   <% if (theme.effects.sakura) { %><%- js('js/sakura') %><% } %>
