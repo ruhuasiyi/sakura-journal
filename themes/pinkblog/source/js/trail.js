@@ -19,8 +19,10 @@
   var acc = 0;
   var SPAWN_DIST = 90;   // 每移动约 90px 落一片
   var MAX_PARTS = 30;    // 同屏上限
+  var running = false;   // 无粒子时停掉 rAF，鼠标动时唤醒
 
   addEventListener('mousemove', function (e) {
+    if (!running) { running = true; requestAnimationFrame(loop); }
     if (last === null) last = [e.clientX, e.clientY];
     var dx = e.clientX - last[0], dy = e.clientY - last[1];
     acc += Math.sqrt(dx*dx + dy*dy);
@@ -43,6 +45,7 @@
 
   function loop() {
     ctx.clearRect(0, 0, W, H);
+    if (!parts.length) { running = false; return; }   // 空场即停
     for (var i = 0; i < parts.length; i++) {
       var p = parts[i];
       p.phase += .02;
@@ -61,7 +64,6 @@
       }
     }
     parts = parts.filter(function(p){ return p.life > 0 && p.y <= H + 40; });
-    requestAnimationFrame(loop);
+    if (running) requestAnimationFrame(loop);
   }
-  loop();
 })();

@@ -5,8 +5,14 @@
   document.body.appendChild(canvas);
   var ctx = canvas.getContext('2d');
   var W, H, petals = [];
+  var DPR = Math.min(devicePixelRatio || 1, 1.5);  // 高分屏按 1.5 封顶，省 4 倍像素填充
 
-  function resize() { W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+  function resize() {
+    W = innerWidth; H = innerHeight;
+    canvas.width = W * DPR; canvas.height = H * DPR;
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
   function isDark() { return document.documentElement.dataset.theme === 'dark'; }
   function petalCount() { return innerWidth < 768 ? 12 : 26; }
 
@@ -44,8 +50,14 @@
       ctx.fill();
       ctx.restore();
     }
-    requestAnimationFrame(tick);
+    if (!paused) requestAnimationFrame(tick);
   }
+
+  var paused = false;
+  document.addEventListener('visibilitychange', function () {
+    paused = document.hidden;
+    if (!paused) requestAnimationFrame(tick);
+  });
 
   resize();
   addEventListener('resize', resize);
