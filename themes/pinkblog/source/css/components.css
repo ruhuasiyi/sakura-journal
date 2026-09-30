@@ -195,6 +195,9 @@
 }
 .post-card-cover, .post-card-body, .post-card .tape { z-index: 1; }
 .post-card-cover, .post-card-body { position: relative; }
+/* 拉伸链接：覆盖整卡的透明层，点正文也能进文章 */
+.card-overlay { position: absolute; inset: 0; z-index: 1; cursor: pointer; }
+.post-card-title a, .post-card-meta a, .post-card-cover { position: relative; z-index: 2; }
 .post-card-cover .cover-img {
   position: relative; width: 100%; height: auto;
   aspect-ratio: 2 / 3;          /* 加载前占位，防文档高度塌缩；加载后由 JS 换真实比例 */
