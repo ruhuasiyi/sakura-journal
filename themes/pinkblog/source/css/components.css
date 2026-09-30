@@ -207,6 +207,8 @@
 .post-card-cover, .post-card-body { position: relative; }
 .post-card-cover .cover-img {
   position: relative; width: 100%; height: auto;
+  aspect-ratio: 2 / 3;          /* 加载前占位，防文档高度塌缩；加载后由 JS 换真实比例 */
+  object-fit: cover;
   display: block;
   transition: transform .25s ease;
 }

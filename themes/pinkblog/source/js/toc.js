@@ -16,6 +16,18 @@ function pbInitPage() {
     wrap.appendChild(label);
   });
 
+  // 封面图加载完成后，用真实宽高比替换 2:3 占位
+  document.querySelectorAll('.post-card-cover .cover-img').forEach(function (img) {
+    function natural() {
+      if (img.naturalWidth) {
+        img.style.aspectRatio = img.naturalWidth + ' / ' + img.naturalHeight;
+        img.style.objectFit = 'contain';
+      }
+    }
+    if (img.complete) natural();
+    else img.addEventListener('load', natural);
+  });
+
   // 封面卡：文字列高度钳制到封面实际高度（文字适应封面）
   var mq = matchMedia('(min-width: 769px)');
   document.querySelectorAll('.post-card.has-cover').forEach(function (card) {
