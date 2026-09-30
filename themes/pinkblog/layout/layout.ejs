@@ -37,6 +37,9 @@
       root.dataset.theme = next;
       try { localStorage.setItem('pb-theme', next); } catch (e) {}
       label();
+      var gi = document.querySelector('iframe.giscus-frame');
+      if (gi) gi.contentWindow.postMessage(
+        { giscus: { setConfig: { theme: next } } }, 'https://giscus.app');
     });
     label();
   })();

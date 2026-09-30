@@ -11,7 +11,7 @@
     <div class="post-content">
       <%- page.content %>
     </div>
-    <% if (theme.comment.giscus.repo) { %>
+    <% if (theme.comment.giscus.repo && theme.comment.giscus.category_id) { %>
     <section class="comments">
       <script src="https://giscus.app/client.js"
         data-repo="<%= theme.comment.giscus.repo %>"
@@ -21,6 +21,14 @@
         data-mapping="pathname" data-strict="0" data-reactions-enabled="1"
         data-emit-metadata="0" data-input-position="top" data-theme="light"
         data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous" async>
+      </script>
+      <script>
+      (function () {
+        // giscus 是异步脚本，解析阶段先把 data-theme 改成当前主题再让它加载
+        var s = document.querySelector('script[src*="giscus"]');
+        if (s) s.setAttribute('data-theme',
+          document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
+      })();
       </script>
     </section>
     <% } %>
