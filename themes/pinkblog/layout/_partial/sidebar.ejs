@@ -9,12 +9,6 @@
     <h3>✿ 标签</h3>
     <div class="tagcloud-wrap"><%- tagcloud({ min_font: 12, max_font: 16, amount: 20, color: false }) %></div>
   </div>
-  <% if (theme.comment.waline && theme.comment.waline.serverURL) { %>
-  <div class="card side-card" id="recent-comments-card">
-    <h3>✿ 最近评论</h3>
-    <div id="recent-comments" class="recent-comments"><p class="rc-empty">加载中…</p></div>
-  </div>
-  <% } %>
   <div class="card side-card">
     <h3>✿ 最近</h3>
     <ul class="recent-list">
@@ -23,4 +17,10 @@
       <% }) %>
     </ul>
   </div>
+  <% if (theme.comment.waline && theme.comment.waline.serverURL) { %>
+  <div class="card side-card" id="recent-comments-card">
+    <h3>✿ 最近评论</h3>
+    <div id="recent-comments" class="recent-comments"><p class="rc-empty">加载中…</p></div>
+  </div>
+  <% } %>
 </aside>
