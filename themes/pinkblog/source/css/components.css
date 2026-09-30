@@ -186,11 +186,11 @@
 [data-theme='dark'] .hljs-params { color: #EADDD8; }
 
 /* ---- 文章卡片封面图 ---- */
-.post-card.has-cover { display: flex; gap: 16px; align-items: stretch; padding: 14px; min-height: 240px; }
+.post-card.has-cover { display: flex; gap: 16px; align-items: stretch; padding: 14px; }
 .post-card.has-cover:nth-child(even) { flex-direction: row-reverse; }
 .post-card-cover {
-  flex: 0 0 300px; border-radius: calc(var(--radius) - 2px);
-  overflow: hidden; position: relative; min-height: 176px;
+  flex: 0 0 300px; height: 190px; border-radius: calc(var(--radius) - 2px);
+  overflow: hidden; position: relative;
   background: var(--color-bg);
 }
 .post-card-cover .cover-blur {
