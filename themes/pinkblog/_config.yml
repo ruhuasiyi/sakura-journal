@@ -23,6 +23,10 @@ comment:
     lang: 'zh-CN'
     emoji:
       - /waline/emoji/tieba
+      - /waline/emoji/ac_classic
+      - /waline/emoji/ac_snake
+      - /waline/emoji/ac_cai
+      - /waline/emoji/ac_yanxuan
 
 links:
   - name: Hexo
