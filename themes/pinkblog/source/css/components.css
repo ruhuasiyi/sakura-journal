@@ -193,9 +193,10 @@
   overflow: hidden; position: relative;
   background: var(--color-bg);
 }
-.post-card-cover, .post-card-body, .post-card .tape { z-index: 1; }
 .post-card-cover, .post-card-body { position: relative; }
-/* 拉伸链接：覆盖整卡的透明层，点正文也能进文章 */
+.post-card .tape { position: absolute; z-index: 1; }
+/* 拉伸链接：覆盖整卡的透明层，点正文也能进文章。
+   注意 body 不能设 z-index（会形成堆叠上下文，导致内部的标题/标签链接压不过覆盖层） */
 .card-overlay { position: absolute; inset: 0; z-index: 1; cursor: pointer; }
 .post-card-title a, .post-card-meta a, .post-card-cover { position: relative; z-index: 2; }
 .post-card-cover .cover-img {
