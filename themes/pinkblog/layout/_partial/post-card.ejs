@@ -2,7 +2,8 @@
   <span class="tape" aria-hidden="true"></span>
   <% if (post.cover) { %>
   <a class="post-card-cover" href="<%- url_for(post.path) %>" tabindex="-1" aria-hidden="true">
-    <img src="<%- url_for(post.cover) %>" alt="<%= post.title %>" loading="lazy">
+    <img class="cover-blur" src="<%- url_for(post.cover) %>" alt="" aria-hidden="true" loading="lazy">
+    <img class="cover-img" src="<%- url_for(post.cover) %>" alt="<%= post.title %>" loading="lazy">
   </a>
   <% } %>
   <div class="post-card-body">
