@@ -196,7 +196,7 @@
 .card-blur {
   position: absolute; inset: 0; z-index: 0;
   background-size: cover; background-position: center;
-  filter: blur(26px) saturate(1.2); opacity: .38;
+  filter: blur(26px) saturate(1.2); opacity: .45;
   transform: scale(1.1); pointer-events: none;
 }
 .post-card-cover, .post-card-body, .post-card .tape { z-index: 1; }
@@ -208,9 +208,15 @@
 }
 .post-card-cover:hover .cover-img { transform: scale(1.045); }
 .post-card.has-cover .post-card-body {
-  flex: 1; min-width: 0; padding: 4px 4px 0 0;
+  flex: 1; min-width: 0; padding: 12px 14px;
   display: flex; flex-direction: column;
   overflow: hidden;
+  background: color-mix(in srgb, var(--color-card) 92%, transparent);
+  border-radius: 5px;
+  box-shadow: 2px 3px 0 rgba(180, 120, 130, .10);
+}
+[data-theme='dark'] .post-card.has-cover .post-card-body {
+  box-shadow: 2px 3px 0 rgba(0, 0, 0, .35);
 }
 .post-card.has-cover .post-card-meta { margin-top: auto; }
 @media (max-width: 768px) {
