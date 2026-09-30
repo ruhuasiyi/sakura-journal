@@ -8,14 +8,14 @@ categories: [Linux]
 
 想更换桌面环境，苦于ext4的快照不够方便、优雅，遂折腾转为btrfs
 
-### 使用`btrfs-convert`转换
+## 使用`btrfs-convert`转换
 
 确保磁盘有一定的空间，进入到livecd
 
 首先检查磁盘问题，防止带着问题上战场。
 
 ```bash
-fsck.etx4 /dev/nvme0n1p4
+fsck.ext4 /dev/nvme0n1p4
 ```
 
 随后双手合十，祈求执行以下命令转换。
@@ -30,19 +30,18 @@ btrfs-convert /dev/nvme0n1p4
 btrfs-convert -r /dev/nvme0n1p4
 ```
 
-### 
 
-### 重建初始化内存盘
+## 重建初始化内存盘
 
 挂载磁盘、**chroot**并重建**initramfs**：
 
 ```bash
 mount /dev/nvme0n1p4 /mnt
 arch-chroot /mnt
-mkinitcpio --present linux
+mkinitcpio --preset linux
 ```
 
-### 启动透明压缩
+## 启动透明压缩
 
 启动透明压缩前保证磁盘有足够的空间，否则先保证可以正常进入系统后删除快照：
 
@@ -56,12 +55,12 @@ btrfs subvolume delete /mnt/ext2_saved
 btrfs filesystem defragment -r -v -czstd /mnt
 ```
 
-### 创建子卷（subvolume）
+## 创建子卷（subvolume）
 
 创建子卷并迁移数据
 
 ```bash
-cbtrfs subvolume create /mnt/@
+btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
 btrfs subvolume create /mnt/@var
 btrfs subvolume create /mnt/@usr_local
@@ -92,7 +91,7 @@ mount /dev/nvme0n1p1 /mnt/boot/efi
 genfstab -U /mnt > /mnt/etc/fstab
 ```
 
-检查`/etc/fstab`，将跟分区调整为**rw**，将快照的压缩去除
+检查`/etc/fstab`，将根分区调整为**rw**，将快照的压缩去除
 
 ```bash
 # /dev/nvme0n1p4
@@ -117,7 +116,7 @@ UUID=f3e8494a-ff37-4932-9085-e03dce5ab458    /.snapshots    btrfs         rw,rel
 UUID=C4EE-5413          /boot/efi     vfat          rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro    0 2
 ```
 
-### 更新引导
+## 更新引导
 
 rEFInd下：
 
@@ -129,7 +128,7 @@ rEFInd下：
 "Boot with minimal options"   "ro root=/dev/nvme0n1p4"
 ```
 
-### 通过balance回收数据
+## 通过balance回收数据
 
 引导进入系统后终端执行以下命令（需要较长一段时间）
 
@@ -137,9 +136,9 @@ rEFInd下：
 btrfs balance start /
 ```
 
-### 其他
+## 其他
 
-#### 禁用var目录的CoW
+### 禁用var目录的CoW
 
 ```bash
 chattr +C /mnt/var

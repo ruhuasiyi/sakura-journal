@@ -6,7 +6,7 @@ categories: [Linux]
 ---
 
 
-### 配置zwap
+## 配置swap
 
 为防止swapfile被拍进快照里，我们需要单独为swapfile建一个子卷
 
@@ -43,7 +43,7 @@ UUID=f3e8494a-ff37-4932-9085-e03dce5ab458     /swap        btrfs        subvol=@
 
 重启系统，再查看`/proc/swaps`，确保swapfile成功启用
 
-##### 配置zswap
+#### 配置zswap
 
 在稳定版的官方内核中，zswap被默认启用，有：
 
@@ -69,7 +69,7 @@ $ sudo mkinitcpio -p linux
 
 修改内核参数，指定zstd为默认压缩算法
 
-rEFInd引导下，修改`/boot/refind_linux.conf`，添加参数`zswap.compressor=lz4`
+rEFInd引导下，修改`/boot/refind_linux.conf`，添加参数`zswap.compressor=zstd`
 
 重启系统，查看`/sys/module/zswap/parameters/compressor`
 
@@ -78,7 +78,7 @@ $ cat /sys/module/zswap/parameters/compressor
 zstd
 ```
 
-### 配置并启动休眠
+## 配置并启动休眠
 
 配置**initramfs**，在**udev**钩子后加入**resume**钩子
 
@@ -102,14 +102,14 @@ $ sudo btrfs inspect-internal map-swapfile /swap/swapfile -r
 添加内核参数
 
 ```bash
-resume=UUID=f3e8494a-ff37-4932-9085-e03dce5ab458 resume_offset=2982144 hibernate.compressor=lz4
+resume=UUID=f3e8494a-ff37-4932-9085-e03dce5ab458 resume_offset=2982144 hibernate.compressor=zstd
 ```
 
 随后重启系统运行`systemctl hibernate`测试休眠是否正常
 
 Gnome下可以安装 [Power Off Options](https://extensions.gnome.org/extension/8189/power-off-options/) 插件来添加休眠按钮
 
-#### 参考资料：
+### 参考资料：
 
 - [[内容投稿] 一文说清swap,zram,zswap，交换空间和内存压缩方案](https://bbs.deepin.org.cn/post/270814)
 
