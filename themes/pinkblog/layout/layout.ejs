@@ -16,6 +16,8 @@
     } catch (e) {}
   })();
   </script>
+  <script>window.PB_WALINE = { serverURL: '<%= theme.comment.waline ? theme.comment.waline.serverURL : '' %>', lang: '<%= theme.comment.waline ? theme.comment.waline.lang : "zh-CN" %>', module: '/waline/waline.js' };</script>
+  <link rel="stylesheet" href="/waline/waline.css">
   <%- css('css/tokens') %>
   <%- css('css/base') %>
   <%- css('css/components') %>
@@ -91,18 +93,6 @@
         var oldMain = document.querySelector('main.container');
         if (!newMain || !oldMain) { location.href = url; return; }
         document.title = doc.title;
-        // giscus 的脚本节点不会随 importNode 执行，需重建并注入当前主题
-        newMain.querySelectorAll('script[src*="giscus"]').forEach(function (old) {
-          var fresh = document.createElement('script');
-          fresh.src = old.src;
-          for (var i = 0; i < old.attributes.length; i++) {
-            var a = old.attributes[i];
-            if (a.name === 'data-theme') a.value =
-              document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
-            fresh.setAttribute(a.name, a.value);
-          }
-          old.replaceWith(fresh);
-        });
         oldMain.replaceWith(document.adoptNode(newMain));
         window.pbInitPage && window.pbInitPage();
       });

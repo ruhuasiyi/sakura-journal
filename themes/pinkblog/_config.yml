@@ -7,6 +7,7 @@ menu:
   归档: /archives
   友链: /links
   项目: /projects
+  留言: /board
   关于: /about
 
 effects:
@@ -17,11 +18,9 @@ live2d:
   enable: true
 
 comment:
-  giscus:
-    repo: 'ruhuasiyi/sakura-journal'
-    repo_id: 'R_kgDOU0IMuA'
-    category: 'Comment'
-    category_id: 'DIC_kwDOU0IMuM4DGsqQ'
+  waline:
+    serverURL: 'https://comment.rhsy.moe:8443'
+    lang: 'zh-CN'
 
 links:
   - name: Hexo

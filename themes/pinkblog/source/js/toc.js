@@ -16,6 +16,50 @@ function pbInitPage() {
     wrap.appendChild(label);
   });
 
+  // ---- Waline 评论组件（文章页/留言板）----
+  var walineEl = document.getElementById('waline-comment');
+  if (walineEl && window.PB_WALINE && window.PB_WALINE.serverURL) {
+    if (window._walineInstance && window._walineInstance.destroy) window._walineInstance.destroy();
+    import(window.PB_WALINE.module).then(function (W) {
+      window._walineInstance = W.init({
+        el: '#waline-comment',
+        serverURL: window.PB_WALINE.serverURL,
+        lang: window.PB_WALINE.lang || 'zh-CN',
+        dark: 'html[data-theme="dark"]',
+        pageview: false
+      });
+    }).catch(function (err) { console.warn('[pinkblog] Waline 加载失败', err); });
+  }
+
+  // ---- 侧栏最近评论（实时拉取，失败静默隐藏）----
+  var rcEl = document.getElementById('recent-comments');
+  if (rcEl && window.PB_WALINE && window.PB_WALINE.serverURL) {
+    fetch(window.PB_WALINE.serverURL + '/api/comment?type=recent&pageSize=3&lang=zh-CN')
+      .then(function (r) { return r.json(); })
+      .then(function (res) {
+        var list = (res && res.errno === 0 && res.data) || [];
+        if (!list.length) {
+          rcEl.innerHTML = '<p class="rc-empty">还没有评论，去 <a href="/board/">留言板</a> 抢个沙发？</p>';
+          return;
+        }
+        rcEl.innerHTML = list.map(function (c) {
+          var esc = function (t) { return String(t || '').replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+          var nick = esc(c.nick || '匿名');
+          var text = esc(String(c.comment || '').replace(/<[^>]*>/g, '').slice(0, 42));
+          var link = c.url || '/';
+          var diff = (Date.now() - new Date(c.insertedAt).getTime()) / 1000;
+          var ago = isNaN(diff) ? '' :
+                    diff < 3600 ? Math.max(1, Math.floor(diff / 60)) + ' 分钟前' :
+                    diff < 86400 ? Math.floor(diff / 3600) + ' 小时前' :
+                    Math.floor(diff / 86400) + ' 天前';
+          return '<a class="rc-item" href="' + link + '"><b>' + nick + '</b><span>' + text + '</span><i>' + ago + '</i></a>';
+        }).join('');
+      })
+      .catch(function () {
+        rcEl.innerHTML = '<p class="rc-empty">评论服务暂时不可用</p>';
+      });
+  }
+
   // 封面图加载完成后，用真实宽高比替换 2:3 占位
   document.querySelectorAll('.post-card-cover .cover-img').forEach(function (img) {
     function natural() {

@@ -14,7 +14,7 @@
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
   }
   function isDark() { return document.documentElement.dataset.theme === 'dark'; }
-  function petalCount() { return innerWidth < 768 ? 12 : 26; }
+  function petalCount() { return innerWidth < 768 ? 5 : 10; }
 
   function Petal() { this.reset(true); }
   Petal.prototype.reset = function (init) {
@@ -30,10 +30,20 @@
 
   function tick() {
     ctx.clearRect(0, 0, W, H);
+    var inBurst = (Date.now() - burstStart) % BURST_CYCLE < BURST_ACTIVE;
+    if (inBurst && !wasBurst) {
+      // 新一阵开始：所有花瓣从屏幕上方错落重置
+      petals.forEach(function (p) {
+        p.reset(false);
+        p.y = -20 - Math.random() * H * .5;
+      });
+    }
+    wasBurst = inBurst;
     ctx.fillStyle = isDark() ? '#FF9CC3' : '#F4A7B9';
     ctx.globalAlpha = isDark() ? .3 : .5;
     for (var i = 0; i < petals.length; i++) {
       var p = petals[i];
+      if (!inBurst && p.y > H) continue;   // 歇场期：花瓣自然落完后不再补充
       p.y += p.speedY;
       p.x += Math.sin(p.y / 40) * .6;
       p.rot += p.rotSpeed;
@@ -54,6 +64,10 @@
   }
 
   var paused = false;
+  // 樱花雨节奏：每 30s 一个周期，前 10s 飘落，后 20s 歇——像窗外偶尔飘来的花
+  var BURST_ACTIVE = 10000, BURST_CYCLE = 30000;
+  var burstStart = Date.now();
+  var wasBurst = true;
   document.addEventListener('visibilitychange', function () {
     paused = document.hidden;
     if (!paused) requestAnimationFrame(tick);

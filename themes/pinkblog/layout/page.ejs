@@ -6,4 +6,7 @@
   <div class="post-content">
     <%- page.content %>
   </div>
+  <% if (page.waline && theme.comment.waline) { %>
+  <div id="waline-comment" class="page-waline"></div>
+  <% } %>
 </article>

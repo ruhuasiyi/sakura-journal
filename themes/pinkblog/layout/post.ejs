@@ -12,26 +12,9 @@
     <div class="post-content">
       <%- page.content %>
     </div>
-    <% if (theme.comment.giscus.repo && theme.comment.giscus.category_id) { %>
-    <section class="comments">
-      <script src="https://giscus.app/client.js"
-        data-repo="<%= theme.comment.giscus.repo %>"
-        data-repo-id="<%= theme.comment.giscus.repo_id %>"
-        data-category="<%= theme.comment.giscus.category %>"
-        data-category-id="<%= theme.comment.giscus.category_id %>"
-        data-mapping="pathname" data-strict="0" data-reactions-enabled="1"
-        data-emit-metadata="0" data-input-position="top" data-theme="light"
-        data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous" async>
-      </script>
-      <script>
-      (function () {
-        // giscus 是异步脚本，解析阶段先把 data-theme 改成当前主题再让它加载
-        var s = document.querySelector('script[src*="giscus"]');
-        var base = 'https://rhsy.moe/css/giscus-';
-        if (s) s.setAttribute('data-theme', base +
-          (document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light') + '.css');
-      })();
-      </script>
+    <% if (theme.comment.waline && theme.comment.waline.serverURL) { %>
+    <section class="post-comments">
+      <div id="waline-comment"></div>
     </section>
     <% } %>
   </article>

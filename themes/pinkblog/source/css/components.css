@@ -238,3 +238,35 @@
 }
 .post-card-peek p { margin: 0 0 .8em; }
 .post-card-peek p:last-child { margin-bottom: 0; }
+
+/* ---- Waline 评论（手帐风适配）---- */
+#waline-comment, .page-waline {
+  --waline-theme-color: var(--color-primary);
+  --waline-active-color: var(--color-accent);
+  --waline-color: var(--color-text);
+  --waline-bgcolor: var(--color-card);
+  --waline-bgcolor-el: var(--color-bg);
+  --waline-border-color: var(--color-border);
+  --waline-info-bgcolor: rgba(244, 167, 185, .12);
+  --waline-info-color: var(--color-accent);
+  margin-top: 1.5em;
+  font-size: 14px;
+}
+.post-comments { margin-top: 1.2em; }
+
+/* ---- 侧栏最近评论 ---- */
+.recent-comments { display: flex; flex-direction: column; }
+.rc-item {
+  display: block; padding: 8px 0;
+  border-bottom: 1px dashed var(--color-border);
+  color: var(--color-text);
+}
+.rc-item:last-child { border-bottom: none; padding-bottom: 2px; }
+.rc-item b { display: block; font-size: 12.5px; font-weight: 600; color: var(--color-accent); }
+.rc-item span {
+  display: block; margin: 3px 0; font-size: 12.5px; color: var(--color-text-soft);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.rc-item i { font-style: normal; font-size: 11px; color: var(--color-text-soft); opacity: .8; }
+.rc-empty { margin: 0; font-size: 12.5px; color: var(--color-text-soft); }
+.rc-empty a { color: var(--color-primary); }
