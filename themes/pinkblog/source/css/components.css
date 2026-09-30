@@ -206,6 +206,7 @@
 .post-card.has-cover .post-card-body {
   flex: 1; min-width: 0; padding: 4px 4px 0 0;
   display: flex; flex-direction: column;
+  overflow: hidden;
 }
 .post-card.has-cover .post-card-meta { margin-top: auto; }
 @media (max-width: 768px) {
@@ -220,7 +221,7 @@
 
 /* ---- 内容透视卡：正文自然流填充，底部渐隐 ---- */
 .post-card-peek {
-  flex: 1; overflow: hidden; margin-bottom: 12px;
+  flex: 1; min-height: 0; overflow: hidden; margin-bottom: 12px;
   font-size: 13.5px; line-height: 1.8; color: var(--color-text-soft);
   -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent);
   mask-image: linear-gradient(180deg, #000 72%, transparent);

@@ -16,6 +16,25 @@
     wrap.appendChild(label);
   });
 
+  // 封面卡：文字列高度钳制到封面实际高度（文字适应封面）
+  var mq = matchMedia('(min-width: 769px)');
+  document.querySelectorAll('.post-card.has-cover').forEach(function (card) {
+    var cover = card.querySelector('.post-card-cover');
+    var body = card.querySelector('.post-card-body');
+    if (!cover || !body) return;
+    var img = cover.querySelector('.cover-img');
+    function fit() {
+      if (mq.matches) body.style.maxHeight = cover.offsetHeight + 'px';
+      else body.style.maxHeight = '';
+    }
+    fit();
+    if (img && !img.complete) img.addEventListener('load', fit);
+  });
+  mq.addEventListener('change', function () {
+    document.querySelectorAll('.post-card.has-cover .post-card-body')
+      .forEach(function (b) { b.style.maxHeight = ''; });
+  });
+
   var toc = document.getElementById('toc');
   var content = document.querySelector('.post-content');
   if (!toc || !content) return;
