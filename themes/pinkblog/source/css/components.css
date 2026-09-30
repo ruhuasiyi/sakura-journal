@@ -331,5 +331,8 @@
 
 /* ---- 萌计数器 ---- */
 .moe-counter { margin: 10px 0 6px; text-align: center; }
-.moe-counter img { display: inline-block; height: 28px; opacity: .85; }
+.moe-counter img {
+  display: inline-block; height: 40px; opacity: .85;
+  image-rendering: pixelated;
+}
 [data-theme='dark'] .moe-counter img { opacity: .7; }
