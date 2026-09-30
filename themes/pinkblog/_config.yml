@@ -29,7 +29,9 @@ comment:
       - /waline/emoji/ac_yanxuan
 
 analytics:
-  goatcounter: 'https://analytics.rhsy.moe/count'
+  umami:
+    script: 'https://analytics.rhsy.moe/script.js'
+    websiteId: 'aefaeb1c-580c-4771-b7d1-7a39889855d1'
   moecounter: 'https://count.rhsy.moe/get/@blog?theme=moebooru'
 
 links:

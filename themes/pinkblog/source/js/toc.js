@@ -16,13 +16,7 @@ function pbInitPage() {
     wrap.appendChild(label);
   });
 
-  // ---- 统计：SPA 换页后补计数（GoatCounter）+ 萌计数器刷新 ----
-  if (window.goatcounter && window.goatcounter.count) {
-    window.goatcounter.count({
-      path: location.pathname + location.search,
-      title: document.title
-    });
-  }
+  // ---- 萌计数器刷新（Umami 自动追踪 SPA 换页，无需手动补）----
   var moeImg = document.querySelector('.moe-counter img');
   if (moeImg) {
     var sep = moeImg.src.indexOf('?') > -1 ? '&' : '?';
