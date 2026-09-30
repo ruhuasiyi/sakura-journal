@@ -26,8 +26,9 @@
       (function () {
         // giscus 是异步脚本，解析阶段先把 data-theme 改成当前主题再让它加载
         var s = document.querySelector('script[src*="giscus"]');
-        if (s) s.setAttribute('data-theme',
-          document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
+        var base = 'https://rhsy.moe/css/giscus-';
+        if (s) s.setAttribute('data-theme', base +
+          (document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light') + '.css');
       })();
       </script>
     </section>
