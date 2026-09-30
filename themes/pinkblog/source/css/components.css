@@ -253,6 +253,18 @@
   font-size: 14px;
 }
 .post-comments { margin-top: 1.2em; }
+/* Waline 自带暗色主题会覆盖变量——在暗色下重新钉回主题令牌（夜手帐紫） */
+[data-theme='dark'] #waline-comment,
+[data-theme='dark'] .page-waline {
+  --waline-bgcolor: var(--color-card);
+  --waline-bgcolor-el: var(--color-bg);
+  --waline-color: var(--color-text);
+  --waline-border-color: var(--color-border);
+  --waline-theme-color: var(--color-primary);
+  --waline-active-color: var(--color-accent);
+  --waline-info-bgcolor: rgba(255, 156, 195, .12);
+  --waline-info-color: #FF9CC3;
+}
 
 /* ---- 侧栏最近评论 ---- */
 .recent-comments { display: flex; flex-direction: column; }
