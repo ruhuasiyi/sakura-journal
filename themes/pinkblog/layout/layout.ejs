@@ -67,6 +67,8 @@
   // 轻量路由：站内跳转 fetch 换页 + 同页 View Transition（卡片 morph 到文章页）
   // 配合 toc.js 暴露的 window.pbInitPage() 完成换页后重初始化
   (function () {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    var scrollMap = {};  // 记录每个页面的滚动位置，后退时恢复
     function swap(url) {
       return fetch(url).then(function (res) { return res.text(); }).then(function (html) {
         var doc = new DOMParser().parseFromString(html, 'text/html');
@@ -87,15 +89,21 @@
           old.replaceWith(fresh);
         });
         oldMain.replaceWith(document.adoptNode(newMain));
-        window.scrollTo(0, 0);
         window.pbInitPage && window.pbInitPage();
       });
     }
     function navigate(url, push) {
+      scrollMap[location.href] = window.scrollY;  // 离开前记住位置
+      function go() {
+        return swap(url).then(function () {
+          // 前进到新页 → 回到顶部；后退 → 恢复离开时的位置
+          window.scrollTo(0, push ? 0 : (scrollMap[url] || 0));
+        });
+      }
       if (document.startViewTransition) {
-        document.startViewTransition(function () { return swap(url); });
+        document.startViewTransition(go);
       } else {
-        swap(url);
+        go();
       }
       if (push) history.pushState({}, '', url);
     }
