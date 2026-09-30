@@ -8,6 +8,7 @@ url: http://localhost:4000
 root: /
 permalink: :year/:month/:day/:title/
 theme: pinkblog
+post_asset_folder: true
 
 index_generator:
   path: ''
@@ -15,7 +16,6 @@ index_generator:
 
 marked:
   gfm: true
-  prependRoot: true
   postAsset: true
 
 # 代码高亮：hljs 类名 + 无行号（行号的 gutter 表格布局会把行号与代码分家）
