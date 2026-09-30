@@ -31,18 +31,15 @@
     var btn = document.getElementById('theme-toggle');
     if (!btn) return;
     var root = document.documentElement;
-    function label() { btn.textContent = root.dataset.theme === 'dark' ? '☀️' : '🌙'; }
     btn.addEventListener('click', function () {
       var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
       root.dataset.theme = next;
       try { localStorage.setItem('pb-theme', next); } catch (e) {}
-      label();
       var gi = document.querySelector('iframe.giscus-frame');
       if (gi) gi.contentWindow.postMessage(
         { giscus: { setConfig: { theme: 'https://rhsy.moe/css/giscus-' + next + '.css' } } },
         'https://giscus.app');
     });
-    label();
   })();
   </script>
   <%- js('js/toc') %>
