@@ -186,7 +186,7 @@
 [data-theme='dark'] .hljs-params { color: #EADDD8; }
 
 /* ---- 文章卡片封面图 ---- */
-.post-card.has-cover { display: flex; gap: 16px; align-items: stretch; padding: 14px; }
+.post-card.has-cover { display: flex; gap: 16px; align-items: stretch; padding: 14px; min-height: 240px; }
 .post-card.has-cover:nth-child(even) { flex-direction: row-reverse; }
 .post-card-cover {
   flex: 0 0 300px; border-radius: calc(var(--radius) - 2px);
@@ -203,10 +203,15 @@
   transition: transform .25s ease;
 }
 .post-card-cover:hover .cover-img { transform: scale(1.045); }
-.post-card.has-cover .post-card-body { flex: 1; min-width: 0; padding: 4px 4px 0 0; }
+.post-card.has-cover .post-card-body {
+  flex: 1; min-width: 0; padding: 4px 4px 0 0;
+  display: flex; flex-direction: column; justify-content: center;
+}
 @media (max-width: 768px) {
   .post-card.has-cover,
   .post-card.has-cover:nth-child(even) { flex-direction: column; }
   .post-card-cover { flex: none; height: 160px; }
   .post-card.has-cover .post-card-body { padding: 6px 2px 0; }
 }
+
+.read-time { font-size: 12px; color: var(--color-text-soft); margin: 0 4px; }

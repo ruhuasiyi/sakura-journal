@@ -8,9 +8,10 @@
   <% } %>
   <div class="post-card-body">
   <h2 class="post-card-title"><a href="<%- url_for(post.path) %>"><%= post.title %></a></h2>
-  <p class="post-card-excerpt"><%= truncate(strip_html(post.excerpt || post.content), { length: 76 }) %></p>
+  <p class="post-card-excerpt"><%= truncate(strip_html(post.excerpt || post.content), { length: 120 }) %></p>
   <div class="post-card-meta">
     <span class="stamp"><%= date(post.date, 'YYYY-MM-DD') %></span>
+    <span class="read-time">约 <%= Math.max(1, Math.ceil(strip_html(post.content).length / 450)) %> 分钟</span>
     <% if (post.tags && post.tags.length) { post.tags.each(function (t) { %>
     <a class="stamp stamp-tag" href="<%- url_for(t.path) %>">✿ <%= t.name %></a>
     <% }); } %>
