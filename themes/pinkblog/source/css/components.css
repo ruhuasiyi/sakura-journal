@@ -35,10 +35,10 @@
 .post-card { transform: rotate(-.4deg); transition: transform .18s, box-shadow .18s; }
 .post-card:nth-child(even) { transform: rotate(.5deg); }
 .post-card:hover { transform: rotate(0) translateY(-3px); box-shadow: var(--shadow-card-hover); }
-.post-card-title { margin: 2px 0 6px; font-size: 18px; }
+.post-card-title { margin: 2px 0 8px; font-size: 20px; }
 .post-card-title a { color: var(--color-text); }
 .post-card-title a:hover { color: var(--color-primary); text-decoration: none; }
-.post-card-excerpt { margin: 0 0 12px; font-size: 13.5px; color: var(--color-text-soft); }
+.post-card-excerpt { margin: 0 0 12px; font-size: 13.5px; line-height: 1.8; color: var(--color-text-soft); }
 .post-card-meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 
 .profile-card { text-align: center; }
