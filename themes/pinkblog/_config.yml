@@ -20,8 +20,8 @@ comment:
   giscus:
     repo: 'ruhuasiyi/sakura-journal'
     repo_id: 'R_kgDOU0IMuA'
-    category: ''
-    category_id: ''
+    category: 'Comment'
+    category_id: 'DIC_kwDOU0IMuM4DGsqQ'
 
 links:
   - name: Hexo
