@@ -193,10 +193,14 @@
   overflow: hidden; position: relative;
   background: var(--color-bg);
 }
-.post-card-cover .cover-blur {
-  position: absolute; inset: -12px; width: calc(100% + 24px); height: calc(100% + 24px);
-  object-fit: cover; filter: blur(14px) saturate(1.15); opacity: .55;
+.card-blur {
+  position: absolute; inset: 0; z-index: 0;
+  background-size: cover; background-position: center;
+  filter: blur(26px) saturate(1.2); opacity: .38;
+  transform: scale(1.1); pointer-events: none;
 }
+.post-card-cover, .post-card-body, .post-card .tape { z-index: 1; }
+.post-card-cover, .post-card-body { position: relative; }
 .post-card-cover .cover-img {
   position: relative; width: 100%; height: auto;
   display: block;
