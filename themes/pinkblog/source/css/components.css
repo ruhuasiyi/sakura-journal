@@ -255,7 +255,10 @@
 .comments-rss svg { width: 14px; height: 14px; }
 
 /* ---- Waline 底部 RSS（本文/本站）→ Lucide 线条风格（CSS mask 换皮，跟随主题色）---- */
-.wl-rss { display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.wl-rss {
+  display: flex; flex-wrap: wrap; gap: 6px 14px;
+  max-width: none !important; overflow: visible;   /* 覆盖 Waline 的 16px 钳制：文字常显 */
+}
 .wl-rss svg { display: none; }   /* 隐藏自带的橙色方块图标 */
 .wl-rss a {
   display: inline-flex; align-items: center; gap: 5px;
