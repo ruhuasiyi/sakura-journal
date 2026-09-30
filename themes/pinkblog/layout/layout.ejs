@@ -61,10 +61,6 @@
       var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
       root.dataset.theme = next;
       try { localStorage.setItem('pb-theme', next); } catch (e) {}
-      var gi = document.querySelector('iframe.giscus-frame');
-      if (gi) gi.contentWindow.postMessage(
-        { giscus: { setConfig: { theme: 'https://rhsy.moe/css/giscus-' + next + '.css' } } },
-        'https://giscus.app');
     });
   })();
   </script>

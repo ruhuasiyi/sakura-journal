@@ -328,11 +328,3 @@
 .rc-item i { font-style: normal; font-size: 11px; color: var(--color-text-soft); opacity: .8; }
 .rc-empty { margin: 0; font-size: 12.5px; color: var(--color-text-soft); }
 .rc-empty a { color: var(--color-primary); }
-
-/* ---- 萌计数器 ---- */
-.moe-counter { margin: 10px 0 6px; text-align: center; }
-.moe-counter img {
-  display: inline-block; width: 300px; height: auto; opacity: .85;
-  image-rendering: pixelated;
-}
-[data-theme='dark'] .moe-counter img { opacity: .7; }

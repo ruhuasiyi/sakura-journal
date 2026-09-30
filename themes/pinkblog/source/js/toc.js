@@ -17,12 +17,6 @@ function pbInitPage() {
   });
 
   // ---- 萌计数器刷新（Umami 自动追踪 SPA 换页，无需手动补）----
-  var moeImg = document.querySelector('.moe-counter img');
-  if (moeImg) {
-    var u = new URL(moeImg.src);
-    u.searchParams.set('t', Date.now());   // 只更新时间戳，保留 theme 等参数
-    moeImg.src = u;
-  }
 
   // ---- Waline 评论组件（文章页/留言板）----
   var walineEl = document.getElementById('waline-comment');
