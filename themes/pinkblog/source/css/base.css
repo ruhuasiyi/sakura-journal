@@ -7,11 +7,11 @@ body {
   line-height: 1.7;
   color: var(--color-text);
   background-color: var(--color-bg);
-  background-image: repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(180, 120, 130, .06) 28px);
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 41px, rgba(180, 120, 130, .12) 42px);
   transition: background-color .25s, color .25s;
 }
 [data-theme='dark'] body {
-  background-image: repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(255, 255, 255, .04) 28px);
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 41px, rgba(255, 255, 255, .07) 42px);
 }
 a { color: var(--color-primary); text-decoration: none; }
 a:hover { text-decoration: underline; text-decoration-style: wavy; text-decoration-color: var(--color-tape); }
@@ -46,7 +46,7 @@ h1, h2, h3, h4 { line-height: 1.35; }
 [data-theme='dark'] .theme-toggle .icon-sun { display: block; }
 [data-theme='dark'] .theme-toggle .icon-moon { display: none; }
 
-.container { max-width: 1080px; margin: 0 auto; padding: 26px 20px 60px; }
+.container { max-width: 1140px; margin: 0 auto; padding: 26px 20px 60px; }
 .site-footer {
   border-top: 1px dashed var(--color-border);
   text-align: center; padding: 18px; font-size: 13px; color: var(--color-text-soft);

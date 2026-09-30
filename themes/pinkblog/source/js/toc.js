@@ -1,4 +1,16 @@
 (function () {
+  // 代码块语言标签：从 figure.highlight 的类名取语言
+  document.querySelectorAll('figure.highlight').forEach(function (fig) {
+    var lang = fig.className.split(/\s+/).filter(function (c) {
+      return c !== 'highlight' && c !== 'plain';
+    })[0];
+    if (!lang) return;
+    var label = document.createElement('span');
+    label.className = 'code-lang';
+    label.textContent = lang;
+    fig.appendChild(label);
+  });
+
   var toc = document.getElementById('toc');
   var content = document.querySelector('.post-content');
   if (!toc || !content) return;

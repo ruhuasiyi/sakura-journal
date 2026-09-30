@@ -18,6 +18,13 @@ marked:
   prependRoot: true
   postAsset: true
 
+# 代码高亮：hljs 类名 + 无行号（行号的 gutter 表格布局会把行号与代码分家）
+syntax_highlighter: highlight.js
+highlight:
+  line_number: false
+  hljs: true
+  tab_replace: '  '
+
 # Hexo 默认忽略 _ 开头的文件；_headers 是 Cloudflare 静态资源的自定义响应头配置
 include:
   - _headers

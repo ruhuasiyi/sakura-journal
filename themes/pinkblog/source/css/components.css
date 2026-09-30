@@ -136,3 +136,51 @@
 
 /* ---- 鼠标拖尾画布 ---- */
 #trail-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 40; }
+
+/* ---- 代码块（figure.highlight 结构）---- */
+.post-content figure.highlight {
+  background: var(--color-bg);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius);
+  margin: 1.2em 0;
+  overflow-x: auto;
+  position: relative;
+}
+.post-content figure.highlight table { width: 100%; border-collapse: collapse; }
+.post-content figure.highlight td { padding: 0; border: none; background: none; }
+.post-content figure.highlight td.code { width: 100%; }
+.post-content figure.highlight pre {
+  margin: 0; padding: 14px 16px; background: none; border: none; border-radius: 0;
+  font-size: 13.5px; line-height: 1.6;
+}
+.post-content figure.highlight pre code { background: none; padding: 0; font-size: inherit; }
+.code-lang {
+  position: absolute; top: 7px; right: 12px;
+  font-size: 11px; letter-spacing: .5px;
+  color: var(--color-text-soft); pointer-events: none;
+}
+/* 行内代码与代码块内的 hljs 配色（亮暗两套，跟随手帐令牌） */
+.hljs { color: var(--color-text); background: none; }
+.hljs-keyword, .hljs-selector-tag, .hljs-literal, .hljs-section { color: #C4536B; }
+.hljs-string, .hljs-attr, .hljs-symbol, .hljs-bullet, .hljs-addition { color: #5E8F7C; }
+.hljs-comment, .hljs-quote, .hljs-deletion { color: #B39A94; font-style: italic; }
+.hljs-number, .hljs-meta, .hljs-link { color: #B96A85; }
+.hljs-title, .hljs-name, .hljs-function .hljs-title, .hljs-title.function_ { color: #8A6570; font-weight: 600; }
+.hljs-built_in, .hljs-type, .hljs-class .hljs-title, .hljs-title.class_ { color: #B96A85; }
+.hljs-variable, .hljs-template-variable, .hljs-params { color: #6B5450; }
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: 700; }
+[data-theme='dark'] .hljs-keyword, [data-theme='dark'] .hljs-selector-tag,
+[data-theme='dark'] .hljs-literal, [data-theme='dark'] .hljs-section { color: #FF9CC3; }
+[data-theme='dark'] .hljs-string, [data-theme='dark'] .hljs-attr,
+[data-theme='dark'] .hljs-symbol, [data-theme='dark'] .hljs-bullet,
+[data-theme='dark'] .hljs-addition { color: #B5CEA8; }
+[data-theme='dark'] .hljs-comment, [data-theme='dark'] .hljs-quote,
+[data-theme='dark'] .hljs-deletion { color: #8E7BA6; }
+[data-theme='dark'] .hljs-number, [data-theme='dark'] .hljs-meta,
+[data-theme='dark'] .hljs-link { color: #C4AEFF; }
+[data-theme='dark'] .hljs-title, [data-theme='dark'] .hljs-name,
+[data-theme='dark'] .hljs-title.function_, [data-theme='dark'] .hljs-title.class_ { color: #F0A5BC; }
+[data-theme='dark'] .hljs-built_in, [data-theme='dark'] .hljs-type { color: #C4AEFF; }
+[data-theme='dark'] .hljs-variable, [data-theme='dark'] .hljs-template-variable,
+[data-theme='dark'] .hljs-params { color: #EADDD8; }
