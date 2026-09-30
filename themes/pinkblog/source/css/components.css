@@ -239,31 +239,45 @@
 .post-card-peek p { margin: 0 0 .8em; }
 .post-card-peek p:last-child { margin-bottom: 0; }
 
-/* ---- Waline 评论（手帐风适配）---- */
+/* ---- Waline 评论（手帐风适配）——变量名必须是 waline 实际的连字符拼写 ---- */
 #waline-comment, .page-waline {
   --waline-theme-color: var(--color-primary);
   --waline-active-color: var(--color-accent);
   --waline-color: var(--color-text);
-  --waline-bgcolor: var(--color-card);
-  --waline-bgcolor-el: var(--color-bg);
+  --waline-bg-color: var(--color-card);
+  --waline-bg-color-light: var(--color-bg);
   --waline-border-color: var(--color-border);
-  --waline-info-bgcolor: rgba(244, 167, 185, .12);
+  --waline-border: 1px dashed var(--color-border);
+  --waline-box-shadow: 2px 3px 0 rgba(180, 120, 130, .10);
+  --waline-white: var(--color-card);
+  --waline-light-grey: var(--color-text-soft);
   --waline-info-color: var(--color-accent);
+  --waline-info-bg-color: rgba(244, 167, 185, .12);
+  --waline-disable-color: var(--color-text-soft);
+  --waline-disable-bg-color: var(--color-bg);
+  --waline-badge-color: var(--color-primary);
   margin-top: 1.5em;
   font-size: 14px;
 }
 .post-comments { margin-top: 1.2em; }
-/* Waline 自带暗色主题会覆盖变量——在暗色下重新钉回主题令牌（夜手帐紫） */
+/* Waline 的暗色样式把变量挂在 html 层——这里在容器上重新钉回主题令牌（ID 优先级更高） */
 [data-theme='dark'] #waline-comment,
 [data-theme='dark'] .page-waline {
-  --waline-bgcolor: var(--color-card);
-  --waline-bgcolor-el: var(--color-bg);
+  --waline-bg-color: var(--color-card);
+  --waline-bg-color-light: var(--color-bg);
   --waline-color: var(--color-text);
   --waline-border-color: var(--color-border);
+  --waline-border: 1px dashed var(--color-border);
   --waline-theme-color: var(--color-primary);
   --waline-active-color: var(--color-accent);
-  --waline-info-bgcolor: rgba(255, 156, 195, .12);
+  --waline-white: var(--color-card);
+  --waline-light-grey: var(--color-text-soft);
   --waline-info-color: #FF9CC3;
+  --waline-info-bg-color: rgba(255, 156, 195, .12);
+  --waline-disable-color: var(--color-text-soft);
+  --waline-disable-bg-color: var(--color-bg);
+  --waline-badge-color: var(--color-primary);
+  --waline-box-shadow: 2px 3px 0 rgba(0, 0, 0, .35);
 }
 
 /* ---- 侧栏最近评论 ---- */
