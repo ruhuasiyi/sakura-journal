@@ -1,5 +1,6 @@
 <div class="post-layout">
-  <article class="card post-content-wrap">
+  <% function vtName(path) { var h = 5381; for (var i = 0; i < path.length; i++) { h = ((h << 5) + h + path.charCodeAt(i)) >>> 0; } return 'post-' + h.toString(36); } %>
+  <article class="card post-content-wrap" style="view-transition-name: <%= vtName(page.path) %>">
     <span class="tape" aria-hidden="true"></span>
     <h1 class="post-title"><%= page.title %></h1>
     <div class="post-meta">

@@ -43,6 +43,26 @@
   })();
   </script>
   <%- js('js/toc') %>
+  <script>
+  // hover 预取：悬停站内链接 60ms 后预拉目标页，配合 View Transitions 实现瞬时切换
+  (function () {
+    var prefetched = new Set();
+    function prefetch(url) {
+      if (prefetched.has(url)) return;
+      prefetched.add(url);
+      var l = document.createElement('link');
+      l.rel = 'prefetch';
+      l.href = url;
+      document.head.appendChild(l);
+    }
+    document.addEventListener('mouseover', function (e) {
+      var a = e.target.closest && e.target.closest('a[href]');
+      if (!a || a.host !== location.host || a.hasAttribute('download') ||
+          a.href.indexOf('#') > -1 || a.pathname === location.pathname) return;
+      setTimeout(function () { if (a.matches(':hover')) prefetch(a.href); }, 60);
+    }, { passive: true });
+  })();
+  </script>
   <% if (theme.live2d.enable) { %><%- js('js/live2d') %><% } %>
   <% if (theme.effects.trail) { %><%- js('js/trail') %><% } %>
   <% if (theme.effects.sakura) { %><%- js('js/sakura') %><% } %>

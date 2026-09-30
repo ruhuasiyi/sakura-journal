@@ -51,3 +51,16 @@ h1, h2, h3, h4 { line-height: 1.35; }
   border-top: 1px dashed var(--color-border);
   text-align: center; padding: 18px; font-size: 13px; color: var(--color-text-soft);
 }
+
+/* ---- 跨文档 View Transitions：点击卡片 → 文章从卡片位置展开 ---- */
+@view-transition { navigation: auto; }
+
+/* 卡片与文章页正文的配对命名由模板内联注入（哈希自 post.path） */
+::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) {
+  animation-duration: .3s;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
