@@ -1,6 +1,6 @@
 ---
 title: 使用 Vaultwarden 自建 Bitwarden 服务端
-cover: /images/cover/Image_1790653314673_345.png
+cover: /images/cover/cover-2.avif
 date: 2026-01-09
 tags: [Bitwarden, 服务器]
 categories: [运维]
