@@ -271,6 +271,11 @@
   mask: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 11a9 9 0 0 1 9 9'/%3E%3Cpath d='M4 4a16 16 0 0 1 16 16'/%3E%3Ccircle cx='5' cy='19' r='2' fill='%23000' stroke='none'/%3E%3C/svg%3E") no-repeat center / contain;
 }
 
+/* 经典款是灰度透明线条图——暗色下反色，深灰线条变浅色才看得清 */
+[data-theme='dark'] img[src*="/waline/emoji/ac_classic/"] {
+  filter: invert(1);
+}
+
 /* ---- Waline 评论（手帐风适配）——变量名必须是 waline 实际的连字符拼写 ---- */
 #waline-comment, .page-waline {
   --waline-theme-color: var(--color-primary);
