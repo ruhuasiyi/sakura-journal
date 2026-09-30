@@ -33,15 +33,7 @@ analytics:
     script: 'https://analytics.rhsy.moe/script.js'
     websiteId: 'aefaeb1c-580c-4771-b7d1-7a39889855d1'
 
-links:
-  - name: Hexo
-    url: https://hexo.io
-    desc: 快速简洁的博客框架
-    avatar: ''
-  - name: Cloudflare Pages
-    url: https://pages.cloudflare.com
-    desc: 免费的静态站点托管
-    avatar: ''
+links: []
 
 projects:
   - name: 敬请期待

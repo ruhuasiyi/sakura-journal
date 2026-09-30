@@ -2,6 +2,7 @@
 <% if (page.content) { %>
 <div class="page-intro"><%- page.content %></div>
 <% } %>
+<% if (theme.links && theme.links.length) { %>
 <div class="link-grid">
   <% theme.links.forEach(function (l) { %>
   <a class="card link-card" href="<%= l.url %>" target="_blank" rel="noopener">
@@ -14,3 +15,10 @@
   </a>
   <% }) %>
 </div>
+<% } else { %>
+<div class="card page-card link-empty">
+  <span class="tape" aria-hidden="true"></span>
+  <p>这里还没有朋友 ～</p>
+  <p>想交换友链的话，去<a href="/board/">留言板</a>喊我一声，或者发邮件。</p>
+</div>
+<% } %>
