@@ -1,0 +1,7 @@
+# Cloudflare Workers 静态资源自定义响应头
+# giscus 从 giscus.app 跨源 fetch 这两个主题文件，必须放行 CORS
+/css/giscus-light.css
+  Access-Control-Allow-Origin: *
+
+/css/giscus-dark.css
+  Access-Control-Allow-Origin: *

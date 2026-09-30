@@ -18,6 +18,10 @@ marked:
   prependRoot: true
   postAsset: true
 
+# Hexo 默认忽略 _ 开头的文件；_headers 是 Cloudflare 静态资源的自定义响应头配置
+include:
+  - _headers
+
 server:
   port: 4000
   compress: true
