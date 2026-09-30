@@ -1,5 +1,4 @@
-<% function vtName(path) { var h = 5381; for (var i = 0; i < path.length; i++) { h = ((h << 5) + h + path.charCodeAt(i)) >>> 0; } return 'post-' + h.toString(36); } %>
-<article class="card post-card<%= post.cover ? ' has-cover' : '' %>" style="view-transition-name: <%= vtName(post.path) %>">
+<article class="card post-card<%= post.cover ? ' has-cover' : '' %>">
   <span class="tape" aria-hidden="true"></span>
   <% if (post.cover) { %>
   <div class="card-blur" style="background-image:url('<%- url_for(post.cover) %>')" aria-hidden="true"></div>

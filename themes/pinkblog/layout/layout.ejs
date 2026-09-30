@@ -68,6 +68,11 @@
   // 配合 toc.js 暴露的 window.pbInitPage() 完成换页后重初始化
   (function () {
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    function vtName(path) {
+      var h = 5381;
+      for (var i = 0; i < path.length; i++) h = ((h << 5) + h + path.charCodeAt(i)) >>> 0;
+      return 'post-' + h.toString(36);
+    }
     var scrollMap = {};  // 记录每个页面的滚动位置，后退时恢复
     function swap(url) {
       return fetch(url).then(function (res) { return res.text(); }).then(function (html) {
@@ -115,6 +120,16 @@
       // 纯锚点（同页 #）走默认行为
       if (a.pathname === location.pathname && a.hash) return;
       e.preventDefault();
+      // 只给被点击的卡片挂过渡名（与文章页静态名配对），避免多命名组互相打架
+      var card = a.closest('.post-card');
+      if (card && document.startViewTransition) {
+        card.style.viewTransitionName = vtName(decodeURIComponent(a.pathname).slice(1));
+        document.startViewTransition && (function (c) {
+          var clear = function () { setTimeout(function () { c.style.viewTransitionName = ''; }); };
+          document.addEventListener('viewtransitiondone', clear, { once: true });
+          setTimeout(clear, 900);  // 兜底：VT API 无完成事件时的保守清理
+        })(card);
+      }
       navigate(a.href, true);
     });
     window.addEventListener('popstate', function () { navigate(location.href, false); });
