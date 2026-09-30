@@ -222,6 +222,9 @@
 [data-theme='dark'] .post-card.has-cover .post-card-body {
   box-shadow: 2px 3px 0 rgba(0, 0, 0, .35);
 }
+/* 暗色下模糊光晕压到几乎不可见：亮色封面图在深紫底上非常抢眼 */
+[data-theme='dark'] .card-blur { opacity: .1; }
+[data-theme='dark'] .post-card.has-cover::after { opacity: .35; }
 .post-card.has-cover .post-card-meta { margin-top: auto; }
 @media (max-width: 768px) {
   .post-card.has-cover,
