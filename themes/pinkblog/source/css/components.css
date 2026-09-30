@@ -189,7 +189,7 @@
 .post-card.has-cover { display: flex; gap: 16px; align-items: stretch; padding: 14px; }
 .post-card.has-cover:nth-child(even) { flex-direction: row-reverse; }
 .post-card-cover {
-  flex: 0 0 300px; height: 190px; border-radius: calc(var(--radius) - 2px);
+  flex: 0 0 300px; align-self: flex-start; border-radius: calc(var(--radius) - 2px);
   overflow: hidden; position: relative;
   background: var(--color-bg);
 }
@@ -198,8 +198,8 @@
   object-fit: cover; filter: blur(14px) saturate(1.15); opacity: .55;
 }
 .post-card-cover .cover-img {
-  position: relative; width: 100%; height: 100%;
-  object-fit: contain; display: block;
+  position: relative; width: 100%; height: auto;
+  display: block;
   transition: transform .25s ease;
 }
 .post-card-cover:hover .cover-img { transform: scale(1.045); }
@@ -211,8 +211,9 @@
 @media (max-width: 768px) {
   .post-card.has-cover,
   .post-card.has-cover:nth-child(even) { flex-direction: column; }
-  .post-card-cover { flex: none; height: 160px; }
+  .post-card-cover { flex: none; width: 100%; align-self: auto; }
   .post-card.has-cover .post-card-body { padding: 6px 2px 0; }
+  .post-card-peek { max-height: 220px; }
 }
 
 .read-time { font-size: 12px; color: var(--color-text-soft); margin: 0 4px; }
