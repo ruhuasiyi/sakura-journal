@@ -138,13 +138,13 @@
 #trail-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 40; }
 
 /* ---- 代码块（figure.highlight 结构）---- */
+.highlight-wrap { position: relative; }
 .post-content figure.highlight {
   background: var(--color-bg);
   border: 1px dashed var(--color-border);
   border-radius: var(--radius);
   margin: 1.2em 0;
   overflow-x: auto;
-  position: relative;
 }
 .post-content figure.highlight table { width: 100%; border-collapse: collapse; }
 .post-content figure.highlight td { padding: 0; border: none; background: none; }
