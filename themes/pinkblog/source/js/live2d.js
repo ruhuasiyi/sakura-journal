@@ -23,14 +23,9 @@
     });
   }
 
-  // 避免图片资源跨域问题（与上游 autoload.js 保持一致）
-  var OriginalImage = window.Image;
-  window.Image = function () {
-    var img = new OriginalImage();
-    img.crossOrigin = 'anonymous';
-    return img;
-  };
-  window.Image.prototype = OriginalImage.prototype;
+  // 说明：上游 autoload.js 会全局替换 window.Image 以强设 crossOrigin='anonymous'。
+  // 但本站看板娘资源已全部同源自托管，同源图片无需 CORS；全局改写反而会让
+  // Waline 头像等跨域图片因目标站未返回 CORS 头而加载失败，故此处不再改写全局构造器。
 
   Promise.all([
     loadExternalResource(live2d_path + 'waifu.css', 'css'),
