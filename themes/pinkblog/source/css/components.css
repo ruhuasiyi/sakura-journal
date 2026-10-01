@@ -205,15 +205,15 @@
    注意 body 不能设 z-index（会形成堆叠上下文，导致内部的标题/标签链接压不过覆盖层） */
 .card-overlay { position: absolute; inset: 0; z-index: 1; cursor: pointer; }
 .post-card-title a, .post-card-meta a, .post-card-cover { position: relative; z-index: 2; }
-@media (max-width: 768px) {
-  .post-card-cover .cover-img { max-height: 500px; }   /* 通栏更宽，上限同步放宽 */
-}
 .post-card-cover .cover-img {
   position: relative; width: 100%; height: auto;
   aspect-ratio: 2 / 3;          /* 加载前预留高度——封面图均为 2:3，永不塌缩 */
   max-height: 450px; object-fit: cover; object-position: center 25%;
   display: block;
   transition: transform .25s ease;
+}
+@media (max-width: 768px) {
+  .post-card-cover .cover-img { max-height: 500px; }   /* 通栏更宽，上限同步放宽；置于基础规则之后才生效 */
 }
 .post-card-cover:hover .cover-img { transform: scale(1.045); }
 .post-card.has-cover .post-card-body {
