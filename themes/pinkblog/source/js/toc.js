@@ -75,7 +75,8 @@ function pbInitPage() {
         rcEl.innerHTML = list.map(function (c) {
           const esc = function (t) { return String(t || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/>/g, '&gt;'); };
           const nick = esc(c.nick || '匿名');
-          const text = esc(String(c.comment || '').replace(/<[^>]*>/g, '').slice(0, 42));
+          // 按代码点截断，避免 slice 按 UTF-16 code unit 切出半个 emoji 代理对
+          const text = esc(Array.from(String(c.comment || '').replace(/<[^>]*>/g, '')).slice(0, 42).join(''));
           // 仅放行 http(s) 或站内相对路径，其余一律落到站内（防 javascript:/data: 及属性注入）
           const raw = c.url || '/';
           const link = (/^https?:\/\//i.test(raw) || raw.charAt(0) === '/') ? raw : '/';
