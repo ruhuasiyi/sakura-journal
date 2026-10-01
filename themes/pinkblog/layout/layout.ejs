@@ -36,6 +36,7 @@
   <meta property="og:url" content="<%= config.url %>/<%= page.path %>">
   <meta property="og:image" content="<%= config.url %>/images/avatar.jpg">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+  <script>window.PB_COVERS = <%- JSON.stringify(config.pb_covers || []) %>;</script>
   <script>window.PB_WALINE = {
       serverURL: '<%= theme.comment.waline ? theme.comment.waline.serverURL : '' %>',
       lang: '<%= theme.comment.waline ? theme.comment.waline.lang : "zh-CN" %>',

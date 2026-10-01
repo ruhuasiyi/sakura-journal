@@ -86,17 +86,34 @@ function pbInitPage() {
   document.documentElement.scrollLeft = 0;
   document.body.scrollLeft = 0;
 
-  // 封面图加载完成后，用真实宽高比替换 2:3 占位
-  document.querySelectorAll('.post-card-cover .cover-img').forEach(function (img) {
-    function natural() {
-      if (img.naturalWidth) {
-        img.style.aspectRatio = img.naturalWidth + ' / ' + img.naturalHeight;
-        img.style.objectFit = 'contain';
+  // ---- 无封面文章：从封面池确定性抽选（随机观感、互不重复、同文恒定）----
+  if (window.PB_COVERS && window.PB_COVERS.length) {
+    var pool = window.PB_COVERS;
+    var used = {};
+    document.querySelectorAll('.post-card:not(.has-cover)').forEach(function (card) {
+      var link = card.querySelector('.post-card-title a');
+      var path = link ? link.getAttribute('href') : String(Math.random());
+      var h = 0;
+      for (var i = 0; i < path.length; i++) h = ((h << 5) + h + path.charCodeAt(i)) >>> 0;
+      var idx = h % pool.length;
+      if (used[idx]) {
+        for (var k = 1; k < pool.length; k++) {
+          var c = (idx + k) % pool.length;
+          if (!used[c]) { idx = c; break; }
+        }
       }
-    }
-    if (img.complete) natural();
-    else img.addEventListener('load', natural);
-  });
+      used[idx] = true;
+      card.classList.add('has-cover');
+      var a = document.createElement('a');
+      a.className = 'post-card-cover';
+      a.href = path; a.tabIndex = -1; a.setAttribute('aria-hidden', 'true');
+      var img = document.createElement('img');
+      img.src = pool[idx]; img.alt = ''; img.loading = 'lazy';
+      a.appendChild(img);
+      var body = card.querySelector('.post-card-body');
+      card.insertBefore(a, body);
+    });
+  }
 
   // 封面卡：文字列高度钳制到封面实际高度（文字适应封面）
   var mq = matchMedia('(min-width: 769px)');

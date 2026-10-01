@@ -195,7 +195,7 @@
 .post-card.has-cover { display: flex; gap: 16px; align-items: stretch; padding: 14px; min-width: 0; overflow: hidden; }
 .post-card.has-cover:nth-child(even) { flex-direction: row-reverse; }
 .post-card-cover {
-  flex: 0 0 300px; align-self: flex-start; border-radius: calc(var(--radius) - 2px);
+  flex: 0 0 300px; height: 340px; align-self: flex-start; border-radius: calc(var(--radius) - 2px);
   overflow: hidden; position: relative;
   background: var(--color-bg);
 }
@@ -206,9 +206,8 @@
 .card-overlay { position: absolute; inset: 0; z-index: 1; cursor: pointer; }
 .post-card-title a, .post-card-meta a, .post-card-cover { position: relative; z-index: 2; }
 .post-card-cover .cover-img {
-  position: relative; width: 100%; height: auto;
-  aspect-ratio: 2 / 3;          /* 加载前占位，防文档高度塌缩；加载后由 JS 换真实比例 */
-  object-fit: cover;
+  position: relative; width: 100%; height: 100%;
+  object-fit: cover;            /* 统一裁切：任何比例的图都是整齐的封面 */
   display: block;
   transition: transform .25s ease;
 }
@@ -228,7 +227,7 @@
 @media (max-width: 768px) {
   .post-card.has-cover,
   .post-card.has-cover:nth-child(even) { flex-direction: column; }
-  .post-card-cover { flex: none; width: 100%; align-self: auto; }
+  .post-card-cover { flex: none; width: 100%; height: 260px; align-self: auto; }
   .post-card.has-cover .post-card-body { padding: 6px 2px 0; }
   .post-card-peek { max-height: 220px; min-width: 0; max-width: 100%; overflow: hidden; }
 }
