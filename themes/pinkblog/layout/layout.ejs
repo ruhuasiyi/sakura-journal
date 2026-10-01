@@ -33,7 +33,7 @@
   <meta property="og:title" content="<%= page.title || config.title %>">
   <meta property="og:description" content="<%= metaDesc %>">
   <meta property="og:type" content="<%= is_post() ? 'article' : 'website' %>">
-  <meta property="og:url" content="<%= config.url %>/<%= page.path %>">
+  <meta property="og:url" content="<%- full_url_for(page.path).replace(/index\.html$/, '') %>">
   <meta property="og:image" content="<%= config.url %>/images/avatar.jpg">
   <script>window.PB_COVERS = <%- JSON.stringify(config.pb_covers || []) %>;</script>
   <script>window.PB_WALINE = {
