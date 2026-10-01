@@ -56,7 +56,7 @@ function pbInitPage() {
   // ---- 侧栏最近评论（实时拉取，失败静默隐藏）----
   var rcEl = document.getElementById('recent-comments');
   if (rcEl && window.PB_WALINE && window.PB_WALINE.serverURL) {
-    fetch(window.PB_WALINE.serverURL + '/api/comment?type=recent&pageSize=3&lang=zh-CN')
+    fetch(window.PB_WALINE.serverURL + '/api/comment?type=recent&count=3&lang=zh-CN')
       .then(function (r) { return r.json(); })
       .then(function (res) {
         var list = (res && res.errno === 0 && res.data) || [];
