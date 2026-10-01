@@ -65,16 +65,18 @@ function pbInitPage() {
           return;
         }
         rcEl.innerHTML = list.map(function (c) {
-          var esc = function (t) { return String(t || '').replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+          var esc = function (t) { return String(t || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/>/g, '&gt;'); };
           var nick = esc(c.nick || '匿名');
           var text = esc(String(c.comment || '').replace(/<[^>]*>/g, '').slice(0, 42));
-          var link = c.url || '/';
+          // 仅放行 http(s) 或站内相对路径，其余一律落到站内（防 javascript:/data: 及属性注入）
+          var raw = c.url || '/';
+          var link = (/^https?:\/\//i.test(raw) || raw.charAt(0) === '/') ? raw : '/';
           var diff = (Date.now() - new Date(c.insertedAt).getTime()) / 1000;
           var ago = isNaN(diff) ? '' :
                     diff < 3600 ? Math.max(1, Math.floor(diff / 60)) + ' 分钟前' :
                     diff < 86400 ? Math.floor(diff / 3600) + ' 小时前' :
                     Math.floor(diff / 86400) + ' 天前';
-          return '<a class="rc-item" href="' + link + '"><b>' + nick + '</b><span>' + text + '</span><i>' + ago + '</i></a>';
+          return '<a class="rc-item" href="' + esc(link) + '"><b>' + nick + '</b><span>' + text + '</span><i>' + ago + '</i></a>';
         }).join('');
       })
       .catch(function () {
