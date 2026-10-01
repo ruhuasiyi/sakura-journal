@@ -61,6 +61,15 @@ async function convertAll() {
     }
   }
   if (dirty) fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2));
+
+  // 封面池：source/images/cover/ 下的全部 avif（供无封面文章自动分配）
+  const coverDir = path.join(sourceDir, 'images', 'cover');
+  const covers = [];
+  if (fs.existsSync(coverDir)) {
+    fs.readdirSync(coverDir).filter(f => f.endsWith('.avif')).sort()
+      .forEach(f => covers.push('/images/cover/' + f));
+  }
+  hexo.config.pb_covers = covers;   // 挂到 config——模板里可直接访问
 }
 
 // 把渲染后的图片 URL 反查回源文件路径（覆盖 site 图片与文章资产文件夹两种情况）
