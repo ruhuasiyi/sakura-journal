@@ -109,7 +109,10 @@
       saveScrollMap();
     });
     function swap(url) {
-      return fetch(url).then(function (res) { return res.text(); }).then(function (html) {
+      return fetch(url).then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.text();
+      }).then(function (html) {
         var doc = new DOMParser().parseFromString(html, 'text/html');
         var newMain = doc.querySelector('main.container');
         var oldMain = document.querySelector('main.container');
@@ -117,6 +120,8 @@
         document.title = doc.title;
         oldMain.replaceWith(document.adoptNode(newMain));
         window.pbInitPage && window.pbInitPage();
+      }).catch(function () {
+        location.href = url;   // 断网/404/非 HTML 等失败时兜底整页跳转
       });
     }
     var curUrl = location.href;  // 自己跟踪当前页 URL——popstate 触发时 location 已变成目标页
