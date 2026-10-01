@@ -355,4 +355,6 @@
   #waline-comment .wl-login-info, .page-waline .wl-login-info {
     max-width: none; width: 100%;
   }
+  /* Waline 给面板写了 width:100% + margin .5em——必然右溢 8px；改为自适应扣除边距 */
+  #waline-comment .wl-panel, .page-waline .wl-panel { width: auto; }
 }
