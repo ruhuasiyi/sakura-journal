@@ -72,8 +72,18 @@ async function convertAll() {
   hexo.config.pb_covers = covers;   // 挂到 config——模板里可直接访问
 }
 
+// 构建 目录 → 文章源文件 映射（每次渲染只建一次，避免逐图全量遍历文章）
+function buildPostDirMap() {
+  const map = Object.create(null);
+  hexo.model('Post').find({}).forEach(function (p) {
+    if (!p.path) return;
+    map[p.path.replace(/\/$/, '')] = p.source;
+  });
+  return map;
+}
+
 // 把渲染后的图片 URL 反查回源文件路径（覆盖 site 图片与文章资产文件夹两种情况）
-function toSourceFile(urlPath) {
+function toSourceFile(urlPath, postDirMap) {
   try {
     const root = hexo.config.root || '/';
     let rel = decodeURIComponent(urlPath);
@@ -85,15 +95,12 @@ function toSourceFile(urlPath) {
     if (fs.existsSync(direct)) return direct;
 
     // 文章资产文件夹：2026/01/05/<slug>/pic.png → source/_posts/<slug>/pic.png
-    // 注意：Post.path 是虚拟字段，findOne({path}) 查不到，只能遍历比对
+    // Post.path 是虚拟字段，findOne({path}) 查不到，故用预先建好的目录映射
     const dir = path.posix.dirname(rel);
     const base = path.posix.basename(rel);
-    let post = null;
-    hexo.model('Post').find({}).forEach(function (p) {
-      if (p.path === dir + '/' || p.path === dir) post = p;
-    });
-    if (post) {
-      const candidate = path.join(hexo.source_dir, post.source.replace(/\.md$/i, ''), base);
+    const source = postDirMap && postDirMap[dir];
+    if (source) {
+      const candidate = path.join(hexo.source_dir, source.replace(/\.md$/i, ''), base);
       if (fs.existsSync(candidate)) return candidate;
     }
     return null;
@@ -107,13 +114,14 @@ hexo.extend.filter.register('generateBefore', () => convertAll());
 convertAll();
 
 hexo.extend.filter.register('after_render:html', function (html) {
+  const postDirMap = buildPostDirMap();
   return html.replace(/<img\b[^>]*\bsrc="([^"]+)"[^>]*>/gi, function (tag, src) {
     if (/^(https?:|data:)/i.test(src)) return tag;
     if (/\.avif(\?|#|$)/i.test(src)) return tag;
     if (!CONVERT_EXTS.has(path.extname(src.replace(/[?#].*$/, '')).toLowerCase())) return tag;
 
     const avifUrl = src.replace(/\.(jpe?g|png|webp)(?=[?#]|$)/i, '.avif');
-    const avifSrc = toSourceFile(avifUrl);
+    const avifSrc = toSourceFile(avifUrl, postDirMap);
     if (!avifSrc) return tag;
 
     return '<picture><source srcset="' + avifUrl + '" type="image/avif">' + tag + '</picture>';
