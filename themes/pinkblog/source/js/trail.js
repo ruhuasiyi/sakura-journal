@@ -2,29 +2,29 @@
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   // 鼠标拖尾：花瓣从光标处自然飘落（重力 + 摇曳 + 旋转），落到屏幕底部淡出。
   // 花瓣图本地自托管 /images/sakura-petal.png，源自经典 sakura.js 特效。
-  var cv = document.createElement('canvas');
+  const cv = document.createElement('canvas');
   cv.id = 'trail-canvas';
   document.body.appendChild(cv);
-  var ctx = cv.getContext('2d');
-  var W, H;
+  const ctx = cv.getContext('2d');
+  let W, H;
   function resize() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
   resize();
   addEventListener('resize', resize);
 
-  var img = new Image();
+  const img = new Image();
   img.src = '/images/sakura-petal.png';
 
-  var parts = [];
-  var last = null;
-  var acc = 0;
-  var SPAWN_DIST = 90;   // 每移动约 90px 落一片
-  var MAX_PARTS = 30;    // 同屏上限
-  var running = false;   // 无粒子时停掉 rAF，鼠标动时唤醒
+  let parts = [];
+  let last = null;
+  let acc = 0;
+  const SPAWN_DIST = 90;   // 每移动约 90px 落一片
+  const MAX_PARTS = 30;    // 同屏上限
+  let running = false;     // 无粒子时停掉 rAF，鼠标动时唤醒
 
   addEventListener('mousemove', function (e) {
     if (!running) { running = true; requestAnimationFrame(loop); }
     if (last === null) last = [e.clientX, e.clientY];
-    var dx = e.clientX - last[0], dy = e.clientY - last[1];
+    const dx = e.clientX - last[0], dy = e.clientY - last[1];
     acc += Math.sqrt(dx*dx + dy*dy);
     if (acc > SPAWN_DIST) {
       acc = 0;
@@ -46,8 +46,8 @@
   function loop() {
     ctx.clearRect(0, 0, W, H);
     if (!parts.length) { running = false; return; }   // 空场即停
-    for (var i = 0; i < parts.length; i++) {
-      var p = parts[i];
+    for (let i = 0; i < parts.length; i++) {
+      const p = parts[i];
       p.phase += .02;
       p.vy = Math.min(p.vy + p.g, 2.2);
       p.y += p.vy;

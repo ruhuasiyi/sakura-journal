@@ -3,11 +3,11 @@
   if (matchMedia('(max-width: 768px)').matches) return;   // 移动端不加载看板娘
   // 看板娘资源全部本地自托管（themes/pinkblog/source/live2d/），
   // 不依赖任何 CDN——jsDelivr 的 fastly 节点在部分网络环境不可达。
-  var live2d_path = '/live2d/';
+  const live2d_path = '/live2d/';
 
   function loadExternalResource(url, type) {
     return new Promise(function (resolve, reject) {
-      var tag;
+      let tag;
       if (type === 'css') {
         tag = document.createElement('link');
         tag.rel = 'stylesheet';
