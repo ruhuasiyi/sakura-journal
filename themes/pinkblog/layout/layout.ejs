@@ -40,7 +40,7 @@
       serverURL: '<%= theme.comment.waline ? theme.comment.waline.serverURL : '' %>',
       lang: '<%= theme.comment.waline ? theme.comment.waline.lang : "zh-CN" %>',
       module: '/waline/waline.js',
-      emoji: <%- JSON.stringify(theme.comment.waline.emoji || false) %>
+      emoji: <%- JSON.stringify((theme.comment.waline && theme.comment.waline.emoji) || false) %>
     };</script>
   <link rel="stylesheet" href="/waline/waline.css">
   <%- css('css/tokens') %>
