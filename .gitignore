@@ -1,8 +1,18 @@
-.superpowers/
+# 依赖与构建产物
 node_modules/
 public/
 .db/
 db.json
 db.json.package
-.DS_Store
+
+# AVIF 转换缓存
 .avif-cache.json
+
+# 系统文件
+.DS_Store
+
+# AI 编码工具产物（skills / agent 配置），不入库
+.agents/
+skills-lock.json
+.claude/
+.superpowers/
