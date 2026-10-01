@@ -210,8 +210,8 @@
 }
 .post-card-cover .cover-img {
   position: relative; width: 100%; height: auto;
+  aspect-ratio: 2 / 3;          /* 加载前预留高度——封面图均为 2:3，永不塌缩 */
   max-height: 450px; object-fit: cover; object-position: center 25%;
-  /* ≤2:3 的图完整显示；更长的图温和裁切保住节奏 */
   display: block;
   transition: transform .25s ease;
 }
