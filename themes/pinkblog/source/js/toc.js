@@ -82,6 +82,10 @@ function pbInitPage() {
       });
   }
 
+  // 清掉可能卡住的横向滚动偏移（移动端浏览器在瞬时溢出后会把 scrollLeft 留在原地）
+  document.documentElement.scrollLeft = 0;
+  document.body.scrollLeft = 0;
+
   // 封面图加载完成后，用真实宽高比替换 2:3 占位
   document.querySelectorAll('.post-card-cover .cover-img').forEach(function (img) {
     function natural() {
