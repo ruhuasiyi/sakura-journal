@@ -108,6 +108,7 @@ function pbInitPage() {
       a.className = 'post-card-cover';
       a.href = path; a.tabIndex = -1; a.setAttribute('aria-hidden', 'true');
       var img = document.createElement('img');
+      img.className = 'cover-img';
       img.src = pool[idx]; img.alt = ''; img.loading = 'lazy';
       a.appendChild(img);
       var body = card.querySelector('.post-card-body');
