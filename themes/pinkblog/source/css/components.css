@@ -34,6 +34,7 @@
 
 .post-card { transform: rotate(-.4deg); transition: transform .18s, box-shadow .18s; }
 .post-card:nth-child(even) { transform: rotate(.5deg); }
+.post-card { min-width: 0; overflow: hidden; position: relative; }
 .post-card:hover { transform: rotate(0) translateY(-3px); box-shadow: var(--shadow-card-hover); }
 .post-card-title { margin: 2px 0 8px; font-size: 20px; }
 .post-card-title a { color: var(--color-text); }
@@ -147,7 +148,9 @@
   margin: 1.2em 0;
   overflow-x: auto;
 }
-.post-content figure.highlight table { width: 100%; border-collapse: collapse; }
+.post-content figure.highlight table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.post-card-peek .highlight table { table-layout: fixed; width: 100%; }
+.post-card-peek .highlight td.code { overflow: hidden; }
 .post-content figure.highlight td { padding: 0; border: none; background: none; }
 .post-content figure.highlight td.code { width: 100%; }
 .post-content figure.highlight pre {
@@ -187,7 +190,7 @@
 [data-theme='dark'] .hljs-params { color: #EADDD8; }
 
 /* ---- 文章卡片封面图 ---- */
-.post-card.has-cover { display: flex; gap: 16px; align-items: stretch; padding: 14px; }
+.post-card.has-cover { display: flex; gap: 16px; align-items: stretch; padding: 14px; min-width: 0; overflow: hidden; }
 .post-card.has-cover:nth-child(even) { flex-direction: row-reverse; }
 .post-card-cover {
   flex: 0 0 300px; align-self: flex-start; border-radius: calc(var(--radius) - 2px);
@@ -225,7 +228,7 @@
   .post-card.has-cover:nth-child(even) { flex-direction: column; }
   .post-card-cover { flex: none; width: 100%; align-self: auto; }
   .post-card.has-cover .post-card-body { padding: 6px 2px 0; }
-  .post-card-peek { max-height: 220px; }
+  .post-card-peek { max-height: 220px; min-width: 0; max-width: 100%; overflow: hidden; }
 }
 
 .read-time { font-size: 12px; color: var(--color-text-soft); margin: 0 4px; }
