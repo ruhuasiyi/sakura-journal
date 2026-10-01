@@ -10,6 +10,7 @@
   --shadow-card: 2px 3px 0 rgba(180, 120, 130, .10);
   --shadow-card-hover: 3px 6px 0 rgba(180, 120, 130, .16);
   --radius: 6px;
+  --font-mono: 'JetBrains Mono', 'Cascadia Code', Consolas, 'Courier New', monospace;
   --font-body: 'LXGW WenKai Screen', 'LXGW WenKai', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
 }
 

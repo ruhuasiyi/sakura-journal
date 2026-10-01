@@ -87,7 +87,7 @@
   border-left: 3px dashed var(--color-accent);
   background: rgba(244, 167, 185, .08); color: var(--color-text-soft);
 }
-.post-content code { background: rgba(180, 120, 130, .12); padding: 1px 6px; border-radius: 4px; font-size: .9em; }
+.post-content code { background: rgba(180, 120, 130, .12); padding: 1px 6px; border-radius: 4px; font-size: .9em; font-family: var(--font-mono); }
 .post-content pre { background: var(--color-bg); border: 1px dashed var(--color-border); padding: 14px; border-radius: var(--radius); overflow-x: auto; }
 .post-content pre code { background: none; padding: 0; }
 .post-content img { border-radius: var(--radius); }
@@ -155,6 +155,7 @@
 .post-content figure.highlight td.code { width: 100%; }
 .post-content figure.highlight pre {
   margin: 0; padding: 14px 16px; background: none; border: none; border-radius: 0;
+  font-family: var(--font-mono);
   font-size: 13.5px; line-height: 1.6;
 }
 .post-content figure.highlight pre code { background: none; padding: 0; font-size: inherit; }
@@ -343,3 +344,13 @@
   background: rgba(255, 252, 251, .8);
 }
 [data-theme='dark'] .pending-stamp { background: rgba(51, 42, 46, .8); }
+
+/* 移动端：评论框改为纵向堆叠——头像在上，输入框在下占满 */
+@media (max-width: 768px) {
+  #waline-comment .wl-comment, .page-waline .wl-comment {
+    flex-direction: column;
+  }
+  #waline-comment .wl-login-info, .page-waline .wl-login-info {
+    max-width: none; width: 100%;
+  }
+}
