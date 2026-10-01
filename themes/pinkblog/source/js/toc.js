@@ -1,3 +1,11 @@
+// 文章页过渡名哈希（唯一客户端实现）：卡片点击时与 post.ejs 服务端静态名配对，
+// 保证 View Transitions 卡片→文章页 morph 生效。请勿在其他地方另写一份。
+window.pbVtName = function (path) {
+  var h = 5381;
+  for (var i = 0; i < path.length; i++) h = ((h << 5) + h + path.charCodeAt(i)) >>> 0;
+  return 'post-' + h.toString(36);
+};
+
 function pbInitPage() {
   // 代码块语言标签：从 figure.highlight 的类名取语言。
   // figure 自身是横向滚动容器，标签必须挂在外层 wrapper 上才能钉在可视区域右上角。
