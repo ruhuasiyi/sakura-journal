@@ -109,9 +109,12 @@ function toSourceFile(urlPath, postDirMap) {
   }
 }
 
-hexo.extend.filter.register('generateBefore', () => convertAll());
-// hexo server 启动时也执行一次（watch 中途新增的图片需重启 dev 才转换）
-convertAll();
+// 必须用 after_init 钩子：它在 source 目录扫描/拷贝之前执行，生成的 .avif 才会进入 public/。
+// 1) 不能写成 generateBefore——那是 EventEmitter 事件名，注册成 filter 永远不会执行；
+// 2) 不能只挂 before_generate——那时 source 已处理完，新生成的 avif 不会被拷进 public；
+// 3) 不能在模块顶层直接调 convertAll()——异步且无人等待，页面渲染完封面池仍为空。
+// 后果：无 cover 字段的文章（如 hello world）在线上会整张封面缺失。
+hexo.extend.filter.register('after_init', () => convertAll());
 
 hexo.extend.filter.register('after_render:html', function (html) {
   const postDirMap = buildPostDirMap();
