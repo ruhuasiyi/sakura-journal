@@ -16,3 +16,4 @@ db.json.package
 skills-lock.json
 .claude/
 .superpowers/
+docs/code-review-report.md
