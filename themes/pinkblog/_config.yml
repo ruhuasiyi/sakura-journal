@@ -3,12 +3,13 @@ profile:
   bio: 不知道写什么，先放个placeholder~
 
 menu:
+  # URL 带尾斜杠，避免线上 Cloudflare 307 重定向多一跳
   首页: /
-  归档: /archives
-  友链: /links
-  项目: /projects
-  留言: /board
-  关于: /about
+  归档: /archives/
+  友链: /links/
+  项目: /projects/
+  留言: /board/
+  关于: /about/
 
 effects:
   sakura: true

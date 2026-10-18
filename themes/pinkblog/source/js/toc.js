@@ -6,7 +6,26 @@ window.pbVtName = function (path) {
   return 'post-' + h.toString(36);
 };
 
+// 桌面宽度下的封面高度钳制：change 监听只在模块级注册一次，
+// 否则每次 SPA 换页都会叠加一个等价监听。
+let pbPageToken = 0;
+
+const pbDesktopMq = matchMedia('(min-width: 769px)');
+pbDesktopMq.addEventListener('change', function () {
+  document.querySelectorAll('.post-card.has-cover .post-card-body')
+    .forEach(function (b) { b.style.maxHeight = ''; });
+});
+
 function pbInitPage() {
+  // 旧 Waline 实例无条件销毁：文章页 → 首页时新页面没有 #waline-comment，
+  // 若只在分支里 destroy 会漏掉，Vue 实例与请求随换页次数累积。
+  // pbPageToken 让"上一页尚未完成的 import()"知道自己已过期，不再往新 DOM 里初始化。
+  const pageToken = ++pbPageToken;
+  if (window._walineInstance && window._walineInstance.destroy) {
+    try { window._walineInstance.destroy(); } catch (e) {}
+  }
+  window._walineInstance = null;
+
   // 代码块语言标签：从 figure.highlight 的类名取语言。
   // figure 自身是横向滚动容器，标签必须挂在外层 wrapper 上才能钉在可视区域右上角。
   document.querySelectorAll('figure.highlight').forEach(function (fig) {
@@ -29,8 +48,9 @@ function pbInitPage() {
   // ---- Waline 评论组件（文章页/留言板）----
   const walineEl = document.getElementById('waline-comment');
   if (walineEl && window.PB_WALINE && window.PB_WALINE.serverURL) {
-    if (window._walineInstance && window._walineInstance.destroy) window._walineInstance.destroy();
     import(window.PB_WALINE.module).then(function (W) {
+      // import() 期间用户可能已换页：过期的初始化不能再挂到新页面的 DOM 上
+      if (pageToken !== pbPageToken) return;
       window._walineInstance = W.init({
         el: '#waline-comment',
         serverURL: window.PB_WALINE.serverURL,
@@ -128,22 +148,17 @@ function pbInitPage() {
   }
 
   // 封面卡：文字列高度钳制到封面实际高度（文字适应封面）
-  const mq = matchMedia('(min-width: 769px)');
   document.querySelectorAll('.post-card.has-cover').forEach(function (card) {
     const cover = card.querySelector('.post-card-cover');
     const body = card.querySelector('.post-card-body');
     if (!cover || !body) return;
     const img = cover.querySelector('.cover-img');
     function fit() {
-      if (mq.matches) body.style.maxHeight = cover.offsetHeight + 'px';
+      if (pbDesktopMq.matches) body.style.maxHeight = cover.offsetHeight + 'px';
       else body.style.maxHeight = '';
     }
     fit();
     if (img && !img.complete) img.addEventListener('load', fit);
-  });
-  mq.addEventListener('change', function () {
-    document.querySelectorAll('.post-card.has-cover .post-card-body')
-      .forEach(function (b) { b.style.maxHeight = ''; });
   });
 
   const toc = document.getElementById('toc');

@@ -43,6 +43,8 @@ Hexo 脚本，注册在 `before_generate` filter 上（`hexo generate` 和 `hexo
 - `window.pbInitPage()`（定义在 `js/toc.js`，页面底部先执行一次）负责换页后重初始化：代码块语言标签、Waline 实例（先 destroy 再重建）、最近评论、封面分配、TOC、横向滚动归零。新增依赖 DOM 的初始化逻辑都应加在这里，而不是写成一次性 DOMContentLoaded。
 - `window.pbVtName(path)`（`toc.js`）与 `post.ejs` 里内联的 `vtName()` 是同一套 DJB2 哈希，服务端静态名与客户端点击时挂的 `viewTransitionName` 必须一致，否则 morph 失效。**不要在别处再写第三份。**
 - 卡片点击时只给当前被点卡片临时挂过渡名，避免多个命名组互相冲突；换页后 `main.container` 之外的 DOM（导航、页脚）不会更新。
+- 路由实现在 `js/router.js`：内存缓存（16 条 / 10 分钟 TTL）+ `fetch()` 预取（`<link rel=prefetch>` 在这里无效，线上目录索引 HTML 没有 ETag）。**关键时序**：缓存命中才立即 `startViewTransition`；未命中先 fetch 并显示顶部进度条（`html[data-pb-busy]`），取到后再启动过渡——不要把网络请求放进过渡的 update callback，否则整段 RTT 会冻结画面。`layout.ejs` 里的 `window.PB_BOOT` 必须在 `js('js/toc')` 之前采集（此时 DOM 还是服务端原始 HTML），缓存重放才不会重复包裹代码块/封面。
+- `pushState` 只在 DOM 替换成功后调用一次（Umami 依赖 history 钩子上报 pageview）。`toc.js` 的 `pbPageToken` 用于丢弃换页后过期的 `import()` 结果。
 
 ### 无封面文章的封面分配
 

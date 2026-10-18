@@ -65,102 +65,18 @@
     });
   })();
   </script>
+  <script>
+  // 必须在 pbInitPage 之前抓：此时 main 还是服务端原始 HTML，
+  // 不含代码块标签、封面卡、TOC、Waline 挂载后的 DOM。路由缓存用这份干净快照，
+  // 回退重放时才不会出现重复的 .highlight-wrap / 封面卡 / Waline DOM。
+  (function () {
+    var main = document.querySelector('main.container');
+    // outerHTML：与 router.js 网络取页时缓存的 main.outerHTML 保持同一形状
+    window.PB_BOOT = { main: main ? main.outerHTML : '', title: document.title };
+  })();
+  </script>
   <%- js('js/toc') %>
-  <script>
-  // hover 预取：悬停站内链接 60ms 后预拉目标页，配合 View Transitions 实现瞬时切换
-  (function () {
-    var prefetched = new Set();
-    function prefetch(url) {
-      if (prefetched.has(url)) return;
-      prefetched.add(url);
-      var l = document.createElement('link');
-      l.rel = 'prefetch';
-      l.href = url;
-      document.head.appendChild(l);
-    }
-    document.addEventListener('mouseover', function (e) {
-      var a = e.target.closest && e.target.closest('a[href]');
-      if (!a || a.host !== location.host || a.hasAttribute('download') ||
-          a.href.indexOf('#') > -1 || a.pathname === location.pathname) return;
-      setTimeout(function () { if (a.matches(':hover')) prefetch(a.href); }, 60);
-    }, { passive: true });
-  })();
-  </script>
-  <script>
-  // 轻量路由：站内跳转 fetch 换页 + 同页 View Transition（卡片 morph 到文章页）
-  // 配合 toc.js 暴露的 window.pbInitPage() 完成换页后重初始化
-  (function () {
-    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-    // vtName 唯一实现见 toc.js 的 window.pbVtName（与 post.ejs 服务端静态名配对）
-    function vtName(path) { return window.pbVtName(path); }
-    var scrollMap = {};  // 记录每个页面的滚动位置，后退时恢复（sessionStorage 持久化，F5 不丢）
-    try {
-      scrollMap = JSON.parse(sessionStorage.getItem('pb-scroll') || '{}');
-    } catch (e) {}
-    function saveScrollMap() {
-      try { sessionStorage.setItem('pb-scroll', JSON.stringify(scrollMap)); } catch (e) {}
-    }
-    window.addEventListener('pagehide', function () {
-      scrollMap[curUrl] = window.scrollY;
-      saveScrollMap();
-    });
-    function swap(url) {
-      return fetch(url).then(function (res) {
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        return res.text();
-      }).then(function (html) {
-        var doc = new DOMParser().parseFromString(html, 'text/html');
-        var newMain = doc.querySelector('main.container');
-        var oldMain = document.querySelector('main.container');
-        if (!newMain || !oldMain) { location.href = url; return; }
-        document.title = doc.title;
-        oldMain.replaceWith(document.adoptNode(newMain));
-        window.pbInitPage && window.pbInitPage();
-      }).catch(function () {
-        location.href = url;   // 断网/404/非 HTML 等失败时兜底整页跳转
-      });
-    }
-    var curUrl = location.href;  // 自己跟踪当前页 URL——popstate 触发时 location 已变成目标页
-    function navigate(url, push) {
-      // 保存"离开页"的位置：必须用离开页自己的 URL 作键（location.href 此时已是目标页）
-      scrollMap[curUrl] = window.scrollY;
-      saveScrollMap();
-      function go() {
-        return swap(url).then(function () {
-          // 前进到新页 → 回到顶部；后退 → 恢复离开时的位置
-          window.scrollTo(0, push ? 0 : (scrollMap[url] || 0));
-        });
-      }
-      if (document.startViewTransition) {
-        document.startViewTransition(go);
-      } else {
-        go();
-      }
-      if (push) history.pushState({}, '', url);
-      curUrl = url;
-    }
-    document.addEventListener('click', function (e) {
-      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      var a = e.target.closest && e.target.closest('a[href]');
-      if (!a || a.host !== location.host || a.target === '_blank' || a.hasAttribute('download')) return;
-      // 纯锚点（同页 #）走默认行为
-      if (a.pathname === location.pathname && a.hash) return;
-      e.preventDefault();
-      // 只给被点击的卡片挂过渡名（与文章页静态名配对），避免多命名组互相打架
-      var card = a.closest('.post-card');
-      if (card && document.startViewTransition) {
-        card.style.viewTransitionName = vtName(decodeURIComponent(a.pathname).slice(1));
-        document.startViewTransition && (function (c) {
-          var clear = function () { setTimeout(function () { c.style.viewTransitionName = ''; }); };
-          document.addEventListener('viewtransitiondone', clear, { once: true });
-          setTimeout(clear, 900);  // 兜底：VT API 无完成事件时的保守清理
-        })(card);
-      }
-      navigate(a.href, true);
-    });
-    window.addEventListener('popstate', function () { navigate(location.href, false); });
-  })();
-  </script>
+  <%- js('js/router') %>
   <% if (theme.analytics && theme.analytics.umami) { %>
   <script defer src="<%= theme.analytics.umami.script %>" data-website-id="<%= theme.analytics.umami.websiteId %>"></script>
   <% } %>
