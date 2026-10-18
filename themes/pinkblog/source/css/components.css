@@ -301,6 +301,33 @@
   font-size: 14px;
 }
 .post-comments { margin-top: 1.2em; }
+/* 评论区首屏高度预留：Waline 是异步渲染的，不预留的话 SPA 换页的 View Transition
+   会按"空评论区"的高度拍新快照——短文章被压成一条横带，评论挂载后再撑开。
+   数值按当前 Waline 面板实测（桌面 414 / ≤580px 496 / ≤380px 524，取略小值留白）。 */
+.post-comments #waline-comment { min-height: 410px; }
+@media (max-width: 580px) {
+  /* Waline 在 ≤580px 把昵称/邮箱/网址改成纵向堆叠，面板更高 */
+  .post-comments #waline-comment { min-height: 490px; }
+}
+@media (max-width: 380px) {
+  /* 更窄时评论工具栏换行，再高一些 */
+  .post-comments #waline-comment { min-height: 520px; }
+}
+/* 挂载前（:empty）的占位骨架，避免预留区看起来像渲染错误 */
+.post-comments #waline-comment:empty { position: relative; }
+.post-comments #waline-comment:empty::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px dashed var(--color-border);
+  border-radius: calc(var(--radius) + 2px);
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(180, 120, 130, .08) 0 12px,
+    transparent 12px 24px
+  );
+  opacity: .8;
+}
 /* Waline 的暗色样式把变量挂在 html 层——这里在容器上重新钉回主题令牌（ID 优先级更高） */
 [data-theme='dark'] #waline-comment,
 [data-theme='dark'] .page-waline {
