@@ -113,6 +113,11 @@ function pbInitPage() {
       });
   }
 
+  // ---- 跑步记录页（/runs/）：SPA 换入时脚本不会重新执行，这里负责初始化 ----
+  if (window.pbInitRuns) {
+    try { window.pbInitRuns(); } catch (e) { console.warn('[pinkblog] 跑步页初始化失败', e); }
+  }
+
   // 清掉可能卡住的横向滚动偏移（移动端浏览器在瞬时溢出后会把 scrollLeft 留在原地）
   document.documentElement.scrollLeft = 0;
   document.body.scrollLeft = 0;

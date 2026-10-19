@@ -133,6 +133,280 @@
 .project-card h3 { margin: 0 0 4px; font-size: 15px; color: var(--color-text); }
 .project-card p { margin: 0; font-size: 12.5px; color: var(--color-text-soft); }
 
+/* ========== 跑步页（/runs/）==========
+   数据来自服务器导出的 fitness.json，由 js/runs.js 渲染。
+   结构：左列 周跑量 + RUN LOG，右列 累计 + 单次详情；
+   RUN LOG 与详情卡底部对齐，记录多时在卡内滚动。 */
+.runs-page {
+  --pb-run-grid: rgba(180, 120, 130, .14);
+  --pb-run-soft: rgba(196, 83, 107, .13);
+}
+[data-theme='dark'] .runs-page {
+  --pb-run-grid: rgba(255, 255, 255, .10);
+  --pb-run-soft: rgba(255, 156, 195, .16);
+}
+.runs-loading {
+  padding: 60px 0; text-align: center;
+  font-size: 13.5px; color: var(--color-text-soft);
+}
+.runs-head { margin-bottom: 16px; }
+.runs-head .page-title { margin-bottom: 4px; }
+.runs-intro { margin: 0; font-size: 13px; color: var(--color-text-soft); }
+.runs-error { max-width: 640px; }
+.runs-error h2 { font-size: 18px; margin: 0 0 8px; }
+.runs-error p { margin: 0; font-size: 13.5px; color: var(--color-text-soft); }
+
+/* ================= 跑步页 · 训练簿 ================= */
+.v2-ledger-h b { font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+.v2-ledger-h span { font-size: 12px; color: var(--color-text-soft); font-family: var(--font-mono); }
+.v2-month {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--color-primary);
+  margin: 18px 0 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.v2-month::after { content: ''; flex: 1; border-bottom: 1px solid var(--color-border); }
+
+/* 两列：左 = 周跑量 + RUN LOG，右 = 累计 + 单次详情。
+   RUN LOG 顶部紧接周跑量（自然排布，行距 20px），底部则与右侧详情卡对齐：
+   右列高度由 累计 + 详情（完整展开、不滚动）决定，flex stretch 把左列拉到
+   同高，RUN LOG 用 flex:1 吃掉剩余空间，内容超出时在卡内滚动。 */
+.v2-top {
+  display: flex;
+  gap: 30px;
+  align-items: stretch;
+}
+.v2-col { flex: 1 1 0; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 20px; }
+.v2-col:last-child { flex: 0.96 1 0; }
+.v2-top > .card { margin: 0; }
+.v2-col > .v2-weeks, .v2-col > .v2-sum { flex: 0 0 auto; }
+.v2-ledger {
+  position: relative;
+  flex: 1 1 0;
+  /* min-height:0 必须写：否则列表内容高度会参与列高计算，底部对齐就失效了 */
+  min-height: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+/* 底部渐隐：提示还有更多记录，滚到底时消失 */
+.v2-ledger::after {
+  content: '';
+  position: absolute; left: 1px; right: 1px; bottom: 1px; height: 28px;
+  border-radius: 0 0 10px 10px;
+  background: linear-gradient(to bottom, transparent, var(--color-card) 82%);
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity .18s;
+}
+.v2-ledger.at-end::after { opacity: 0; }
+.v2-ledger-h {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 15px 18px 9px;
+  border-bottom: 2px solid var(--color-text);
+  flex: 0 0 auto;
+}
+.v2-ledger-scroll {
+  flex: 1 1 auto; min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 18px 14px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--pb-run-soft) transparent;
+}
+.v2-ledger-scroll::-webkit-scrollbar { width: 8px; }
+.v2-ledger-scroll::-webkit-scrollbar-track { background: transparent; }
+.v2-ledger-scroll::-webkit-scrollbar-thumb {
+  background: var(--pb-run-soft); border-radius: 99px;
+  border: 2px solid var(--color-card);
+}
+.v2-ledger-scroll::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
+.v2-detail-wrap { flex: 0 0 auto; min-width: 0; display: flex; }
+@media (max-width: 860px) {
+  /* 单列：周跑量 → 累计 → RUN LOG → 详情。
+     主轴变纵向后 align-items 控制的是宽度，必须改回 stretch */
+  .v2-top { flex-direction: column; gap: 18px; align-items: stretch; }
+  .v2-col { display: contents; }
+  .v2-weeks { order: 1; }
+  .v2-sum { order: 2; }
+  .v2-ledger { order: 3; flex: 0 0 auto; height: 420px; max-height: 72vh; }
+  .v2-detail-wrap { order: 4; }
+}
+.v2-weeks { padding: 16px 18px 12px; }
+.v2-weeks-h { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; color: var(--color-text-soft); }
+.v2-weeks-h b { font-family: var(--font-body); font-style: italic; font-weight: 500; font-size: 15px; letter-spacing: 0; color: var(--color-text); }
+.v2-weeks-body { display: flex; gap: 18px; align-items: flex-start; }
+.v2-weeks-main { flex: 1 1 auto; min-width: 0; display: flex; align-items: stretch; gap: 4px; }
+.wk-nav {
+  flex: 0 0 22px; align-self: center;
+  height: 58px;
+  display: grid; place-items: center;
+  border: 1px solid var(--color-border); border-radius: 6px;
+  color: var(--color-text-soft); font-family: var(--font-mono); font-size: 17px; line-height: 1;
+  background: var(--color-card);
+  transition: color .15s, border-color .15s;
+}
+.wk-nav:hover:not(:disabled) { color: var(--color-primary); border-color: var(--color-primary); }
+.wk-nav:disabled { opacity: .28; cursor: default; }
+.wk-chart { position: relative; flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; justify-content: flex-end; }
+/* 柱图高度固定回原尺寸：整张卡片不再被右侧累计卡拉高 */
+.wk-xlabels { position: relative; height: 15px; margin-top: 4px; }
+.wk-xlabels span {
+  position: absolute; top: 0;
+  transform: translateX(-50%);
+  font-family: var(--font-mono); font-size: 9px; color: var(--color-text-soft); white-space: nowrap;
+}
+.wk-xlabels span.edge-l { transform: translateX(-12%); }
+.wk-xlabels span.edge-r { transform: translateX(-88%); }
+.wk-xlabels span.cur { color: var(--color-primary); }
+@media (max-width: 520px) {
+  .wk-xlabels span.l3 { display: none; }
+}
+.wk-plot { position: relative; flex: 0 0 auto; height: 112px; }
+.wk-plot .wk-grid {
+  position: absolute; inset: 0;
+  border-bottom: 1px solid var(--pb-run-grid);
+  background-image: linear-gradient(to top, var(--pb-run-grid) 1px, transparent 1px);
+  background-size: 100% 25%;
+  background-position: 0 calc(100% - 1px);
+  background-repeat: repeat-y;
+}
+.wk-slot { position: absolute; bottom: 0; top: 0; display: flex; align-items: flex-end; justify-content: center; }
+.wk-slot .bar {
+  width: 56%; border-radius: 2px 2px 0 0;
+  background: var(--color-primary); opacity: .82;
+  transition: opacity .15s;
+}
+.wk-slot .bar:hover, .wk-slot .bar.sel { opacity: 1; }
+.wk-slot .bar.sel { box-shadow: inset 0 0 0 1px var(--color-text); }
+.wk-slot .bar.off { background: var(--color-border); opacity: 1; }
+.wk-slot .bar[data-wk] { cursor: pointer; }
+.wk-slot .bar[data-wk]:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 1px; }
+.wk-plot .wk-ymax, .wk-plot .wk-y0 {
+  position: absolute; left: 0;
+  font-family: var(--font-mono); font-size: 9px; color: var(--color-text-soft);
+  transform: translateX(-100%); padding-right: 5px;
+}
+.wk-plot .wk-ymax { top: 0; }
+.wk-plot .wk-y0 { bottom: 0; }
+.wk-side { flex: 0 0 132px; display: flex; flex-direction: column; justify-content: space-between; margin: 0; padding: 0 0 2px 14px; border-left: 1px dashed var(--color-border); }
+.wk-side .wk-range { font-family: var(--font-mono); font-size: 10.5px; color: var(--color-primary); white-space: nowrap; }
+.wk-side .wk-figs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-bottom: 0; }
+/* 本周小结：把统计块下方剩余空间填上，避免与柱图底线脱节 */
+.wk-note { margin-top: 10px; padding-top: 9px; border-top: 1px dashed var(--color-border); font-size: 10.5px; line-height: 1.5; color: var(--color-text-soft); }
+.wk-note b { color: var(--color-text); font-weight: 600; font-family: var(--font-mono); font-size: 10.5px; }
+.wk-side dt { font-size: 10.5px; color: var(--color-text-soft); white-space: nowrap; }
+.wk-side dd { margin: 1px 0 0; font-family: var(--font-mono); font-size: 15px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.wk-side dd small { font-size: 10px; color: var(--color-text-soft); margin-left: 1px; }
+@media (max-width: 520px) {
+  .v2-weeks-body { flex-direction: column; gap: 10px; }
+  .v2-weeks-main { width: 100%; }
+  .wk-side { flex: none; width: 100%; border-left: 0; padding-left: 0; border-top: 1px dashed var(--color-border); padding-top: 10px; margin: 0; }
+  .wk-side .wk-figs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.v2-sum { padding: 16px 18px 14px; display: flex; flex-direction: column; }
+.v2-sum-h { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; color: var(--color-text-soft); }
+.v2-sum-h b { font-family: var(--font-body); font-style: italic; font-weight: 500; font-size: 15px; letter-spacing: 0; color: var(--color-text); }
+.v2-sum-lead { display: flex; align-items: baseline; gap: 6px; margin-bottom: 2px; }
+.v2-sum-lead b { font-family: var(--font-body); font-size: 38px; line-height: 1; font-variant-numeric: tabular-nums; }
+.v2-sum-lead span { font-family: var(--font-mono); font-size: 12px; color: var(--color-text-soft); }
+.v2-sum-sub { font-size: 11.5px; color: var(--color-text-soft); margin-bottom: 12px; }
+.v2-sum-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 14px; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); padding: 11px 0; }
+.v2-sum-grid dt { font-size: 10.5px; color: var(--color-text-soft); }
+.v2-sum-grid dd { margin: 1px 0 0; font-family: var(--font-mono); font-size: 14px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.v2-sum-grid dd small { font-size: 10px; color: var(--color-text-soft); margin-left: 1px; }
+.v2-months { margin-top: auto; padding-top: 10px; display: flex; flex-direction: column; gap: 5px; }
+.v2-months div { display: flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 10px; color: var(--color-text-soft); }
+.v2-months span { flex: 0 0 40px; white-space: nowrap; }
+.v2-months i { height: 5px; border-radius: 2px; background: var(--color-primary); opacity: .8; min-width: 2px; }
+.v2-months em { font-style: normal; margin-left: auto; color: var(--color-text); font-size: 10.5px; white-space: nowrap; }
+
+.v2-week {
+  display: flex; align-items: baseline; gap: 8px;
+  padding: 15px 4px 6px;
+  border-bottom: 1px solid var(--color-border);
+}
+.v2-week-t { font-family: var(--font-body); font-style: italic; font-size: 14px; color: var(--color-primary); white-space: nowrap; }
+.v2-week-r { font-family: var(--font-mono); font-size: 10.5px; color: var(--color-text-soft); white-space: nowrap; }
+.v2-week-sum { margin-left: auto; font-family: var(--font-mono); font-size: 11px; color: var(--color-text); white-space: nowrap; }
+.v2-week-sum span { color: var(--color-text-soft); }
+.runs-page .entry {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr) 72px;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  padding: 11px 4px 11px 10px;
+  /* button 默认样式清零，只留虚线下边框 */
+  background: none;
+  border: 0;
+  border-bottom: 1px dashed var(--color-border);
+  border-left: 3px solid transparent;
+  border-radius: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.runs-page .entry:hover { background: var(--pb-run-soft); }
+.runs-page .entry.sel { border-left-color: var(--color-primary); background: var(--pb-run-soft); }
+.runs-page .e-date b { display: block; font-family: var(--font-mono); font-size: 20px; line-height: 1.1; font-weight: 600; }
+.runs-page .e-date i { font-style: normal; font-family: var(--font-mono); font-size: 10px; color: var(--color-text-soft); }
+.runs-page .e-mid { min-width: 0; }
+.runs-page .e-mid b { display: block; font-family: var(--font-mono); font-size: 15px; font-variant-numeric: tabular-nums; }
+.runs-page .e-mid span { display: block; font-size: 11.5px; color: var(--color-text-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.runs-page .e-spark { justify-self: end; }
+/* 详情卡完整展开：它的自然高度就是右列/第二行的高度基准，不做滚动 */
+.ledger-detail {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 22px;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.ld-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; color: var(--color-text-soft); text-transform: uppercase; }
+.ld-km { font-family: var(--font-body); font-size: 64px; line-height: 1; margin: 8px 0 14px; font-variant-numeric: tabular-nums; }
+.ld-km small { font-family: var(--font-mono); font-size: 15px; color: var(--color-text-soft); margin-left: 4px; }
+.ld-sub { font-size: 13px; color: var(--color-text-soft); margin-bottom: 16px; }
+.ld-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; margin: 16px 0 18px; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); padding: 14px 0; }
+.ld-grid div { min-width: 0; }
+.ld-grid dt { font-size: 11px; color: var(--color-text-soft); }
+.ld-grid dd { margin: 0; font-family: var(--font-mono); font-size: 15px; }
+.ld-route { max-width: 190px; margin-top: 14px; }
+
+
+
+/* ---- 跑步页：曲线与轨迹 ---- */
+.runs-page .chart-legend { display: flex; gap: 14px; font-size: 11px; color: var(--color-text-soft); margin-bottom: 4px; }
+.runs-page .chart-legend .lg::before {
+  content: '';
+  display: inline-block;
+  width: 14px; height: 2px;
+  margin-right: 5px;
+  vertical-align: 3px;
+  background: var(--color-primary);
+}
+.runs-page .chart-legend .lg.pace::before { background: var(--color-text-soft); }
+.runs-page .chart { width: 100%; height: auto; overflow: visible; }
+.runs-page .chart .grid line { stroke: var(--pb-run-grid); stroke-width: 1; }
+.runs-page .ln-hr { fill: none; stroke: var(--color-primary); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.runs-page .ln-pace { fill: none; stroke: var(--color-text-soft); stroke-width: 1.3; stroke-dasharray: 4 3; opacity: .85; }
+.runs-page .chart .ax { font-family: var(--font-mono); font-size: 9px; fill: var(--color-text-soft); }
+.runs-page .route-svg { width: 100%; height: auto; }
+.runs-page .spark { width: 64px; height: 18px; flex-shrink: 0; }
+.runs-page .spark polyline { fill: none; stroke: var(--color-primary); stroke-width: 1.4; opacity: .8; }
+.runs-page .dim { color: var(--color-text-soft); font-size: 12.5px; }
+
 /* ---- 樱花画布 ---- */
 #sakura-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 40; }
 

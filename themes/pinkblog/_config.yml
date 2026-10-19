@@ -6,10 +6,16 @@ menu:
   # URL 带尾斜杠，避免线上 Cloudflare 307 重定向多一跳
   首页: /
   归档: /archives/
+  跑步: /runs/
   友链: /links/
   项目: /projects/
   留言: /board/
   关于: /about/
+
+# 跑步记录页：数据由 scripts/sync-fitness.mjs 生成到 source/fitness.json，
+# 随博客一起部署，页面同源 fetch（想换地址时改这里即可）
+fitness:
+  dataUrl: '/fitness.json'
 
 effects:
   sakura: true

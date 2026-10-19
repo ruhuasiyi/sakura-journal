@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "hexo server",
     "build": "hexo generate",
-    "clean": "hexo clean"
+    "clean": "hexo clean",
+    "sync:fitness": "node tools/sync-fitness.mjs"
   },
   "packageManager": "pnpm@11.26.0",
   "hexo": {

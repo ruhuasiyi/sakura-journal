@@ -13,6 +13,9 @@ pnpm dev        # hexo server，http://localhost:4000
 pnpm build      # hexo generate，输出到 public/
 pnpm clean      # hexo clean
 
+node tools/sync-fitness.mjs    # 同步跑步数据 → 生成 source/fitness.json → 提交并推送
+                               # --no-sync 只导出，--no-push 只写文件，--days N 改同步窗口
+
 npx hexo new post "标题"    # 新建文章（post_asset_folder 开启，会生成同名资源目录）
 ```
 
@@ -49,6 +52,16 @@ Hexo 脚本，注册在 `before_generate` filter 上（`hexo generate` 和 `hexo
 ### 无封面文章的封面分配
 
 `post-card.ejs` 只为 front matter 里写了 `cover:` 的文章渲染封面。没写的文章由 `pbInitPage` 用文章路径哈希从 `window.PB_COVERS` 确定性抽选（同文恒定、同页尽量不重复），并回填 `.post-card-cover`。
+
+### 跑步记录页（`/runs/`）
+
+- 页面模板 `layout/runs.ejs` 只输出空的 `#pb-runs` 容器；数据由 `source/js/runs.js` 从主题配置的 `fitness.dataUrl`（`/fitness.json`，同源）fetch 后渲染。
+- `source/fitness.json` 由 `tools/sync-fitness.mjs` 生成并入库：脚本先调 `mi-fitness-bridge sync` 拉数据到本地 SQLite，再导出成「每条跑步一行 JSON」的文件。页面因此不依赖任何运行时服务。
+- **脚本必须放在 `tools/` 而不是 `scripts/`**：Hexo 会把 `scripts/` 下所有文件当插件加载，ESM + shebang 会直接报 `Script load failed`。
+- 导出内容：汇总字段 + `curve`（秒级 `[偏移秒, 心率, 配速]`，抽稀到约 60 点）+ `route`（GPS 归一化到 0–100 的相对坐标，不含真实经纬度）。
+- 页面必须处理「取不到数据」的情况（已有错误态）。
+- 换页由 SPA 路由接管，脚本不会重新执行，所以 `pbInitPage`（`toc.js`）里调用 `window.pbInitRuns()`；事件监听用 `dataset.bound` 防止重复绑定。
+- 样式在 `components.css` 的「跑步页 · 训练簿」段，通用类名（`.entry`）都收在 `.runs-page` 下，避免污染其他页面。
 
 ### 第三方资源
 

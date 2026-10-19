@@ -36,6 +36,7 @@
   <meta property="og:url" content="<%- full_url_for(page.path).replace(/index\.html$/, '') %>">
   <meta property="og:image" content="<%= config.url %>/images/avatar.jpg">
   <script>window.PB_COVERS = <%- JSON.stringify(config.pb_covers || []) %>;</script>
+  <script>window.PB_FITNESS = { dataUrl: '<%= theme.fitness ? theme.fitness.dataUrl : '' %>' };</script>
   <script>window.PB_WALINE = {
       serverURL: '<%= theme.comment.waline ? theme.comment.waline.serverURL : '' %>',
       lang: '<%= theme.comment.waline ? theme.comment.waline.lang : "zh-CN" %>',
@@ -75,6 +76,7 @@
     window.PB_BOOT = { main: main ? main.outerHTML : '', title: document.title };
   })();
   </script>
+  <%- js('js/runs') %>
   <%- js('js/toc') %>
   <%- js('js/router') %>
   <% if (theme.analytics && theme.analytics.umami) { %>
