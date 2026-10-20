@@ -6,17 +6,8 @@
   <title><%= page.title ? page.title + ' · ' + config.title : config.title %></title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont/style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5/index.css">
-  <script>
-  (function () {
-    try {
-      var t = localStorage.getItem('pb-theme');
-      if (t !== 'dark' && t !== 'light') {
-        t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-      document.documentElement.dataset.theme = t;
-    } catch (e) {}
-  })();
-  </script>
+  <!-- 深色模式暂时下线：不注入 data-theme，始终走 tokens.css 的亮色令牌。
+       暗色样式仍保留在 CSS 里，恢复时把切换按钮和初始化脚本加回来即可。 -->
   <meta name="google-site-verification" content="googleccdc80b5acff15be">
   <link rel="icon" type="image/png" href="/images/favicon.png">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
@@ -54,18 +45,6 @@
     <%- body %>
   </main>
   <%- partial('_partial/footer') %>
-  <script>
-  (function () {
-    var btn = document.getElementById('theme-toggle');
-    if (!btn) return;
-    var root = document.documentElement;
-    btn.addEventListener('click', function () {
-      var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-      root.dataset.theme = next;
-      try { localStorage.setItem('pb-theme', next); } catch (e) {}
-    });
-  })();
-  </script>
   <script>
   // 必须在 pbInitPage 之前抓：此时 main 还是服务端原始 HTML，
   // 不含代码块标签、封面卡、TOC、Waline 挂载后的 DOM。路由缓存用这份干净快照，

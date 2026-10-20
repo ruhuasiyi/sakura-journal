@@ -28,6 +28,7 @@ npx hexo new post "标题"    # 新建文章（post_asset_folder 开启，会生
 - `source/` 是内容：`_posts/`、`about/`、`links/`、`projects/`、`board/`。页面通过 front matter 选布局，例如 `layout: links` / `layout: projects`；`board/index.md` 与文章页使用 `waline: true` 启用评论区。
 - `themes/pinkblog/` 是全部视觉与交互。可调项集中在 `_config.yml`（站点）和 `themes/pinkblog/_config.yml`（菜单、特效开关、Waline、Umami、友链、项目、封面池等）。
 - 样式由 `css/tokens.css`（亮/暗两套 CSS 变量）→ `base.css`（基础布局、跨文档 View Transitions）→ `components.css`（卡片、文章列表等）组成，暗色主题通过 `<html data-theme="dark">` 整体换变量，不要为组件写两套配色。
+- **深色模式目前已下线**：`layout.ejs` 不再注入 `data-theme`，导航里也没有切换按钮，页面固定走亮色令牌（`tokens.css` 里 `color-scheme: light`）。暗色令牌与 `[data-theme='dark']` 规则仍保留，恢复时把初始化脚本、按钮和「切换亮暗主题」的 CSS 加回来即可。
 
 ### 构建期图片处理（`scripts/avif.js`）
 

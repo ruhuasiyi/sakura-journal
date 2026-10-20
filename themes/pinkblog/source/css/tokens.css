@@ -1,4 +1,6 @@
 :root {
+  /* 深色模式暂时下线：固定亮色，表单控件/滚动条也不跟随系统深色 */
+  color-scheme: light;
   --color-bg: #FDF6F4;
   --color-card: #FFFCFB;
   --color-primary: #C4536B;
