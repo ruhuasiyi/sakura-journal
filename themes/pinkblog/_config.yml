@@ -40,7 +40,15 @@ analytics:
     script: 'https://analytics.rhsy.moe/script.js'
     websiteId: 'aefaeb1c-580c-4771-b7d1-7a39889855d1'
 
-links: []
+links:
+  - name: ttcc
+    desc: ttcc 这里是ttcc！
+    url: https://ttcctctc.top
+    avatar: https://ttcctctc.top/images/icon/favicon.ico
+  - name: 月华秋凌的Friends
+    desc: 记录学习历程与心得体会，也分享技术实践、兴趣项目和日常生活中的点滴。
+    url: https://akilunafall.top
+    avatar: https://akilunafall.top/assets/images/site-avatar.webp
 
 projects:
   - name: 敬请期待
