@@ -15,7 +15,7 @@ tags:
 之后，终于成功撬开了龟壳www
 
 
-![image](/home/rhsy/dev/blog/source/_posts/Cracking-the-Turtle/1.png)
+![image](1.png)
 
 
 ## 撬壳细节
@@ -32,10 +32,10 @@ tags:
 遗憾的是，AMD的`VM.Standard.E2.1.Micro`和ARM的`VM.Standard.A1.Flex`全都没有配额，还开不出机子😭
 
 
-![image](/home/rhsy/dev/blog/source/_posts/Cracking-the-Turtle/3.png)
+![image](3.png)
 
 
 
-![image](/home/rhsy/dev/blog/source/_posts/Cracking-the-Turtle/4.png)
+![image](4.png)
 
 
